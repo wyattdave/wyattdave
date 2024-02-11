@@ -36,4 +36,18 @@
 
 <h3> Blog Series</h3>
 
-
+<table>
+<tr>
+  <td><a href="https://dev.to/wyattdave/series/21919"><img src="/img/power automate dev.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/19970"><img src="/img/pro automate.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/19972"><img src="/img/pro app.png" width="400" /></a></td>
+</tr><tr>
+  <td><a href="https://dev.to/wyattdave/series/24751"><img src="/img/fun.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/23350"><img src="/img/automate the platform.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/22764"><img src="/img/how to.png" width="400" /></a></td>
+</tr><tr> 
+  <td><a href="https://dev.to/wyattdave/series/23828"><img src="/img/AI Builder.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/20311"><img src="/img/beneath platform.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/23156"><img src="/img/hacked.png" width="400" /></a></td>
+</tr>
+</table>
