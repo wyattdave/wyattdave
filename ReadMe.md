@@ -1,7 +1,3 @@
-<div id="header" align="center">
-  <img src="https://avatars.githubusercontent.com/u/7852579?v=4" width="100"/>
-</div>
-
 <div id="badges" align="center">
   <a href="https://www.linkedin.com/in/wyattdave/">
     <img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
