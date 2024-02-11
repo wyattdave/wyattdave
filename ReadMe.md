@@ -14,9 +14,9 @@
   </a>
 </div>
 
-<div align="center">
-  <img src="img/stencil repeat.png" width="100%"/>
-</div>
+   ![stencil](/img/stencil repeat.png#gh-dark-mode-only)
+   ![(stencil](/img/stencil repeat white.png#gh-light-mode-only)
+
 <div id="badges-tech" align="center">
     <img src="https://img.shields.io/badge/Power%20Automate-:badgeContent?logo=powerautomate&color=0066FF" alt="power automate Badge"/>
     <img src="https://img.shields.io/badge/Power%20Apps-:badgeContent?logo=powerapps&color=742774" alt="power apps Badge"/>
