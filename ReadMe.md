@@ -6,15 +6,15 @@
   <a href="https://www.linkedin.com/in/wyattdave/">
     <img src="https://img.shields.io/badge/LinkedIn-blue?logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
   </a>
-  <a href="https://twitter.com/wyattDaveDe)">
+  <a href="https://twitter.com/wyattDaveDev)">
     <img src="https://img.shields.io/badge/Twitter-blue?&logo=twitter&logoColor=white" alt="Twitter Badge"/>
   </a>
     <a href="https://dev.to/wyattdave">
     <img src="https://img.shields.io/badge/dev.to-:badgeContent?logo=devdotto&color=0A0A0A" alt="Dev.to Badge"/>
   </a>
 </div>
-<img src="/img/stencil repeat.png#gh-dark-mode-only" alt="stencil"/>
-<img src="/img/stencil repeat white.png#gh-light-mode-only" alt="stencil"/>
+<img src="/img/stencil repeat -Copy.png#gh-dark-mode-only" alt="stencil"/>
+<img src="/img/stencil repeat white - Copy.png#gh-light-mode-only" alt="stencil"/>
 <div id="badges-tech" align="center">
     <img src="https://img.shields.io/badge/Power%20Automate-:badgeContent?logo=powerautomate&color=0066FF" alt="power automate Badge"/>
     <img src="https://img.shields.io/badge/Power%20Apps-:badgeContent?logo=powerapps&color=742774" alt="power apps Badge"/>
