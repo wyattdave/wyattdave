@@ -13,8 +13,7 @@
     <img src="https://img.shields.io/badge/dev.to-:badgeContent?logo=devdotto&color=0A0A0A" alt="Dev.to Badge"/>
   </a>
 </div>
-<img src="/img/stencil repeat -Copy.png#gh-dark-mode-only" alt="stencil"/>
-<img src="/img/stencil repeat white - Copy.png#gh-light-mode-only" alt="stencil"/>
+<img src="/img/stencil repeat white - Copy2.png" alt="stencil"/>
 <div id="badges-tech" align="center">
     <img src="https://img.shields.io/badge/Power%20Automate-:badgeContent?logo=powerautomate&color=0066FF" alt="power automate Badge"/>
     <img src="https://img.shields.io/badge/Power%20Apps-:badgeContent?logo=powerapps&color=742774" alt="power apps Badge"/>
