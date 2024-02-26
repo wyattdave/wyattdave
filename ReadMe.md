@@ -16,7 +16,7 @@
     <img src="https://img.shields.io/badge/Power%20FX-:badgeContent?logo=powerfx&color=7F2157" alt="power fx Badge"/>
     <img src="https://img.shields.io/badge/Dataverse-:badgeContent?logo=dataverse&color=088142" alt="dataverse badge"/>    
     <img src="https://img.shields.io/badge/Power%20Virtual%20Agents-:badgeContent?logo=powervirtualagents&color=0B556A" alt="power virtual agent bdge"/>
-    <img src="https://img.shields.io/badge/Power%20BI%20Agents-:badgeContent?logo=powerbi&color=F2C811&logoColor=ffffff" alt="power bi Badge"/>
+    <img src="https://img.shields.io/badge/Power%20BI-:badgeContent?logo=powerbi&color=F2C811&logoColor=ffffff" alt="power bi Badge"/>
     <img src="https://img.shields.io/badge/Office Script-:badgeContent?logo=excel&color=217346" alt="ofice script badge"/>
     <img src="https://img.shields.io/badge/VBA-:badgeContent?logo=visualbasic&color=512BD4" alt="vb badge"/>
     <img src="https://img.shields.io/badge/JavaScript-:badgeContent?logo=javascript&color=F7DF1E&logoColor=000000"" alt="javascript badge"/>  
