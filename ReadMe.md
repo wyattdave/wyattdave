@@ -29,7 +29,7 @@
 <li><a href="https://chromewebstore.google.com/detail/appreview-for-power-apps/ccbebeaigpaeemcmmeafnlbfnpeihgjn?hl=en-GB">AppReview</a> - Extracts key information to support code reviews for Power Apps</li>
 <li><a href="https://chromewebstore.google.com/detail/power-automate-flow-clipb/ddfobkfenabdkeedpanlmnjjlefgpkba?hl=en-GB">Power DevBox Utility</a> - Utility for Power Automate - saves actions, hot keys, flow history</li>
 <li><a href="https://chromewebstore.google.com/detail/power-devbox-shortcut/pojpnfemffjfhepmlmefchabbmagepfg?hl=en-GB&authuser=0">Power DevBox Shortcut</a> - Saves all Power Platform environment links in a searchable menu</li>
-<li><a href="">Power DevBox Sharehttps://chromewebstore.google.com/detail/power-devbox-share/ffajneecpalmmpihidpphonjjoeaflkg?hl=en-GB&authuser=0</a> - Allows you to share/change owner of Solution contents, like environment variables and connection references</li>
+<li><a href="https://chromewebstore.google.com/detail/power-devbox-share/ffajneecpalmmpihidpphonjjoeaflkg?hl=en-GB&authuser=0">Powr DevBox Share</a> - Allows you to share/change owner of Solution contents, like environment variables and connection references</li>
 
 <h3>Demo/Example Solutions</h3>
 <a href="https://github.com/wyattdave/Power-Platform">Link to Repo</a>
