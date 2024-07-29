@@ -30,6 +30,7 @@
 <li><a href="https://chromewebstore.google.com/detail/power-automate-flow-clipb/ddfobkfenabdkeedpanlmnjjlefgpkba?hl=en-GB">Power DevBox Utility</a> - Utility for Power Automate - saves actions, hot keys, flow history</li>
 <li><a href="https://chromewebstore.google.com/detail/power-devbox-shortcut/pojpnfemffjfhepmlmefchabbmagepfg?hl=en-GB&authuser=0">Power DevBox Shortcut</a> - Saves all Power Platform environment links in a searchable menu</li>
 <li><a href="https://chromewebstore.google.com/detail/power-devbox-share/ffajneecpalmmpihidpphonjjoeaflkg?hl=en-GB&authuser=0">Powr DevBox Share</a> - Allows you to share/change owner of Solution contents, like environment variables and connection references</li>
+<li><a href="https://chromewebstore.google.com/detail/power-devbox-exceptions/gdnlfhamjnaghamjlibigbamdikedpii?authuser=0&hl=en-GB">Powr DevBox Exception</a> - Autoamtically creates expression with full deatil of why flow failed</li>
 
 <h3> Blog Series</h3>
 <table>
