@@ -32,6 +32,10 @@
 <li><a href="https://chromewebstore.google.com/detail/power-devbox-share/ffajneecpalmmpihidpphonjjoeaflkg?hl=en-GB&authuser=0">Powr DevBox Share</a> - Allows you to share/change owner of Solution contents, like environment variables and connection references</li>
 <li><a href="https://chromewebstore.google.com/detail/power-devbox-exceptions/gdnlfhamjnaghamjlibigbamdikedpii?authuser=0&hl=en-GB">Powr DevBox Exception</a> - Autoamtically creates expression with full deatil of why flow failed</li>
 
+<h3>Site</h3>
+<li><a href="powerdevbox.com">Power DevBox</a></li>
+<li><a href="autoreview.powerdevbox.com">AutoReview Webapp</a></li>
+
 <h3> Blog Series</h3>
 <table>
 <tr>
@@ -43,9 +47,13 @@
   <td><a href="https://dev.to/wyattdave/series/23350"><img src="/img/automate the platform.png" width="400" /></a></td>
   <td><a href="https://dev.to/wyattdave/series/22764"><img src="/img/how to.png" width="400" /></a></td>
 </tr><tr> 
-  <td><a href="https://dev.to/wyattdave/series/23828"><img src="/img/AI Builder.png" width="400" /></a></td>
+  <td><a href="https://dev.to/wyattdave/series/27573"><img src="/img/lets talk about.png" width="400" /></a></td>
   <td><a href="https://dev.to/wyattdave/series/20311"><img src="/img/beneath platform.png" width="400" /></a></td>
   <td><a href="https://dev.to/wyattdave/series/23156"><img src="/img/hacked.png" width="400" /></a></td>
+</tr><tr> 
+  <td><a href="https://dev.to/wyattdave/series/23828"><img src="/img/AI Builder.png" width="400" /></a></td>
+  <td></td>
+   <td></td>
 </tr>
 </table>
 
