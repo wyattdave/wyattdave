@@ -45,6 +45,7 @@
 <li><a href="https://solution.powerdevbox.com">Solution Explorer Webapp</a></li>
 <li><a href="https://appreview-pro.dev">Power App Code Review Webapp</a></li>
 <li><a href="https://autoreview-pro.dev">Power Automate Code Review Webapp</a></li>
+<li><a href="https://powerplatformgames.com">Community Repository of Power Platform Games</a></li>
 
 <br>
 <table>
