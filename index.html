@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyatt Dave | Portfolio</title>
+    <meta name="description"
+        content="Wyatt Dave's portfolio site covering Power DevBox, Code Apps, PP:Undoc, blogs, solutions, tools, white papers, and a Sinclair Spectrum-inspired game.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="view-landing">
+    <header class="landing" id="top">
+        <div class="bsod-container">
+            <div class="face">;)</div>
+            <h1 class="lead">Your connection ran into something awesome and needs to redirect.</h1>
+            <p class="sublead">I build Power Platform solutions, tooling, browser-side accelerators, code review
+                systems, and write blogs that make low-code work feel closer to pro-code software engineering.</p>
+
+            <div class="progress">
+                <div class="spinner" aria-hidden="true"></div>
+                <span>Collecting repo telemetry, articles, products, and side quests... 100% complete</span>
+            </div>
+
+            <div class="landing-console" aria-label="Portfolio summary">
+                <div class="landing-lines">01<br>02<br>03<br>04<br>05<br>06</div>
+                <div class="landing-code">
+                    <span class="landing-code-line"><span class="comment">// stop code</span> <span
+                            class="keyword">PROFILE_BOOT</span> = <span
+                            class="string">&quot;0xWYATTDAVE&quot;</span>;</span>
+                    <span class="landing-code-line"><span class="keyword">articles</span> = <span class="string">100+
+                            dev.to posts</span>;</span>
+                    <span class="landing-code-line"><span class="keyword">tooling</span> = <span class="string">6
+                            extensions / 7 web apps / 3 VS Code tools</span>;</span>
+                    <span class="landing-code-line"><span class="keyword">activity</span> = <span class="string">1,043
+                            GitHub contributions last year</span>;</span>
+                    <span class="landing-code-line"><span class="keyword">base</span> = <span
+                            class="string">UK</span>;</span>
+                    <span class="landing-code-line"><span class="keyword">stack</span> = <span class="string"> Power
+                            Automate, Power Apps, Copilot Studio, JavaScript, Office Scripts</span>;</span>
+                </div>
+            </div>
+
+            <button class="reboot-button" type="button" data-open-section="working-on">REBOOT AND LOAD
+                C:\portfolio\workspace.js</button>
+        </div>
+    </header>
+
+    <div class="workspace-shell" id="workspace">
+        <aside class="explorer">
+            <div class="explorer-title">Explorer</div>
+            <div class="repo-root">📁 wyattdave</div>
+
+            <nav class="nav-tree" aria-label="Portfolio sections" id="navTree"></nav>
+
+            <div class="panel-title">About</div>
+            <div class="profile-dock">
+                <div id="pills" style="padding-left: 20px; display: block;">
+                <strong>David Wyatt / Wyatt Dave</strong>
+
+                <img src="https://img.shields.io/badge/Power%20Automate-:badgeContent?logo=powerautomate&color=0066FF"
+                    alt="power automate Badge" />
+                <img src="https://img.shields.io/badge/Power%20Apps-:badgeContent?logo=powerapps&color=742774"
+                    alt="power apps Badge" />
+                <img src="https://img.shields.io/badge/Power%20FX-:badgeContent?logo=powerfx&color=7F2157"
+                    alt="power fx Badge" />
+                <img src="https://img.shields.io/badge/Dataverse-:badgeContent?logo=dataverse&color=088142"
+                    alt="dataverse badge" />
+                <img src="https://img.shields.io/badge/Copilot%20Studio-:badgeContent?logo=copilot&color=0B556A"
+                    alt="power virtual agent bdge" />
+                <img src="https://img.shields.io/badge/Power%20BI-:badgeContent?logo=powerbi&color=F2C811&logoColor=ffffff"
+                    alt="power bi Badge" />
+                <img src="https://img.shields.io/badge/Office Script-:badgeContent?logo=excel&color=217346"
+                    alt="ofice script badge" />
+                <img src="https://img.shields.io/badge/VBA-:badgeContent?logo=visualbasic&color=512BD4"
+                    alt="vb badge" />
+                <img src="https://img.shields.io/badge/JavaScript-:badgeContent?logo=javascript&color=F7DF1E&logoColor=000000"" alt="
+                    javascript badge" />
+                <img src="https://img.shields.io/badge/HTML-:badgeContent?logo=html5&color=E34F26&logoColor=ffffff"" alt="
+                    html badge" />
+                <img src="https://img.shields.io/badge/CSS-:badgeContent?logo=css3&color=1572B6&logoColor=ffffff"" alt="
+                    css badge" />
+                    </div>
+            </div>
+        </aside>
+
+        <main class="editor">
+            <div class="tabs">
+                <div class="tab active"><span class="tab-dot">●</span><span>portfolio.js</span></div>
+                <div class="tab" id="activeTabLabel"><span class="tab-dot">●</span><span>01_working_on.md</span></div>
+            </div>
+            <div class="status-bar">
+                <span class="status-chip">branch: main</span>
+                <span class="status-chip">focus: tools + writing + experiments</span>
+                <span class="status-chip">theme: bsod hero / ide body</span>
+                <span class="status-chip">bonus: Sinclair Spectrum mini-game</span>
+            </div>
+
+            <div class="editor-scroll">
+                <div id="generatedSections"></div>
+
+                <section class="code-file" id="blogs" data-file="03_blogs.api.js">
+                    <div class="file-header">
+                        <h2>Blogs</h2>
+                        <div class="file-meta">
+                            <span class="file-tag">Recent Blogs</span>
+                            <a class="resource-link inline"
+                                href="https://dev.to/api/articles?username=wyattdave&per_page=10" target="_blank"
+                                rel="noreferrer">dev.to/articles</a>
+                        </div>
+                    </div>
+                    <div class="code-body">
+                        <div class="line-numbers">01<br>02<br>03<br>04<br>05<br>06<br>07<br>08<br>09<br>10</div>
+                        <div class="section-content">
+                            <div class="section-copy">
+                                <p>The writing archive is where the day-to-day experiments get turned into patterns:
+                                    environment strategy, low-code architecture, AI-assisted app building, solution
+                                    delivery, Power Automate readability, governance, and the occasional weird side path
+                                    into games or unsupported APIs.</p>
+                            </div>
+                            <div class="blog-grid" id="blogList" aria-live="polite"></div>
+
+                            <div class="pager">
+                                <div class="pager-status" id="blogStatus">Page 1 of live results</div>
+                                <div class="resource-links">
+                                    <button type="button" id="blogPrev" disabled>Previous page</button>
+                                    <button type="button" id="blogNext">Next page</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="code-file" id="spectrum" data-file="11_spectrum_invaders.js">
+                    <div class="file-header">
+                        <h2>Spectrum Invaders</h2>
+                        <div class="file-meta">
+                            <span class="file-tag">Mini-game</span>
+                            <span class="mini-pill">sinclair spectrum</span>
+                            <span class="mini-pill">canvas</span>
+                        </div>
+                    </div>
+                    <div class="code-body">
+                        <div class="line-numbers">10<br>20<br>30<br>40<br>50<br>60<br>70<br>80</div>
+                        <div class="section-content">
+                            <div class="spectrum-shell">
+                                <div class="spectrum-frame">
+                                    <div class="spectrum-stage">
+                                        <div class="spectrum-screen">
+                                            <div class="spectrum-header">
+                                                <span>48K mode</span>
+                                                <span>invade.bas</span>
+                                                <span>score loop</span>
+                                            </div>
+                                            <div class="rainbow" aria-hidden="true"></div>
+                                            <canvas id="spectrumGame" width="256" height="192"
+                                                aria-label="Sinclair Spectrum style space invader game"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="game-panel section-copy">
+                                    <p>A small Space Invaders riff built in a Sinclair Spectrum palette, why because we all need a quick game, and we all know the Spectrum 64k was peak gaming.</p>
+                                    <div class="controls">
+                                        <div class="control-row">
+                                            <span class="control-chip">Left / Right</span>
+                                            <span class="control-chip">Move ship</span>
+                                        </div>
+                                        <div class="control-row">
+                                            <span class="control-chip">Space</span>
+                                            <span class="control-chip">Fire</span>
+                                        </div>
+                                        <div class="control-row">
+                                            <span class="control-chip">R</span>
+                                            <span class="control-chip">Restart after game over</span>
+                                        </div>
+                                    </div>
+                                    <div class="small-panel" id="gameStatus">Booting game loop...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="code-file concealed-panel" id="package-generator" data-file="package.json"
+                    aria-hidden="true">
+                    <div class="file-header">
+                        <h2>package.json</h2>
+                        <div class="file-meta">
+                            <span class="file-tag">Hidden tool</span>
+                            <span class="mini-pill">section generator</span>
+                            <span class="mini-pill">clipboard</span>
+                        </div>
+                    </div>
+                    <div class="code-body">
+                        <div class="section-content package-generator-content">
+                            <div class="generator-lead">
+                                <span class="file-tag">Unlocked</span>
+                                <p>Build a new portfolio section object here. Update any field to regenerate the JSON
+                                    block. If you hand-edit the preview, the next form change will replace it with fresh
+                                    output.</p>
+                            </div>
+
+                            <form class="generator-form" id="packageGeneratorForm" autocomplete="off">
+                                <label class="generator-field">
+                                    <span>id</span>
+                                    <input type="text" name="id" placeholder="new-section" value="new-section">
+                                </label>
+                                <label class="generator-field">
+                                    <span>icon</span>
+                                    <input type="text" name="icon" maxlength="4" placeholder="{}" value="{}">
+                                </label>
+                                <label class="generator-field">
+                                    <span>file</span>
+                                    <input type="text" name="file" placeholder="new_section.md" value="new_section.md">
+                                </label>
+                                <label class="generator-field">
+                                    <span>title</span>
+                                    <input type="text" name="title" placeholder="New Section" value="New Section">
+                                </label>
+
+                                <div class="generator-field generator-field-full meta-collection">
+                                    <div class="generator-field-head">
+                                        <span>meta</span>
+                                        <button class="action-button" type="button" id="addMetaRow">+ add meta
+                                            row</button>
+                                    </div>
+                                    <div class="meta-rows" id="metaRows"></div>
+                                </div>
+
+                                <label class="generator-field generator-field-full">
+                                    <span>markdown</span>
+                                    <textarea name="markdown" rows="8"
+                                        placeholder="Write the markdown body for the section here.">Add the body copy for the new section here.
+
+- First supporting link
+- Second supporting link</textarea>
+                                </label>
+                            </form>
+
+                            <div class="generator-preview-dock">
+                                <div class="generator-preview-head">
+                                    <div>
+                                        <span class="file-tag">Live preview</span>
+                                        <p>Editable JSON output. Copy the block once it matches the section you want to
+                                            add.</p>
+                                    </div>
+                                    <button class="action-button generator-copy" type="button" id="copyPackageJson">Add
+                                        to clipboard</button>
+                                </div>
+                                <textarea id="packagePreview" class="generator-preview" spellcheck="false"
+                                    aria-label="Generated section JSON preview"></textarea>
+                                <div class="generator-status" id="packageGeneratorStatus" aria-live="polite">Waiting for
+                                    input changes.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <p>Built as a static portfolio site from mockup 34 for the landing screen and mockup 21 for the editor-style
+                follow-up sections.</p>
+            <div class="resource-links">
+                <a class="resource-link" href="#top">Back to top</a>
+                <a class="resource-link" href="https://github.com/wyattdave/" target="_blank"
+                    rel="noreferrer">GitHub</a>
+                <a class="resource-link" href="https://powerdevbox.com" target="_blank" rel="noreferrer">Power
+                    DevBox</a>
+            </div>
+        </div>
+    </footer>
+    <script src="portfilio.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
