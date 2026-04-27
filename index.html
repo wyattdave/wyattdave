@@ -53,11 +53,105 @@
     </header>
 
     <div class="workspace-shell" id="workspace">
-        <aside class="explorer">
-            <div class="explorer-title">Explorer</div>
-            <div class="repo-root">📁 wyattdave</div>
+        <aside class="activity-bar" aria-label="Activity Bar">
+            <button class="activity-item active" type="button" title="Explorer (Ctrl+Shift+E)" aria-label="Explorer">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M14.5 3H7.71l-.85-.85L6.51 2h-5l-.5.5v11l.5.5h13l.5-.5v-10L14.5 3zm-.51 8.49V13h-12V7h4.49l.35-.15.86-.86H14v1.5l-.01 4zm0-6.49h-6.5l-.35.15-.86.86H2v-3h4.29l.85.85.36.15H14l-.01.99z"/></svg>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
+            <button class="activity-item" type="button" title="Search (Ctrl+Shift+F)" aria-label="Search">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M15.25 0a8.25 8.25 0 0 0-6.18 13.72L1 22.88l1.12 1L10.28 14.5A8.25 8.25 0 1 0 15.25.01V0zm0 15a6.75 6.75 0 1 1 0-13.5 6.75 6.75 0 0 1 0 13.5z" transform="scale(0.66)"/></svg>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
+            <button class="activity-item" type="button" title="Source Control (Ctrl+Shift+G)" aria-label="Source Control">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.5 8a2.5 2.5 0 0 0-2.45 2H10V7a2 2 0 0 0-2-2H6V3.95A2.5 2.5 0 1 0 5 4v8a2.5 2.5 0 1 0 1 0V6h2a1 1 0 0 1 1 1v3h-.05a2.5 2.5 0 1 0 0 1H9a2 2 0 0 0 2 2h.05a2.5 2.5 0 1 0 2.45-3z"/></svg>
+                <span class="activity-bullet" aria-label="2 changes">2</span>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
+            <button class="activity-item" type="button" title="Run and Debug (Ctrl+Shift+D)" aria-label="Run and Debug">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M10.94 13.5l-1.32 1.32a3.73 3.73 0 0 0-7.24 0L1.06 13.5 0 14.56l1.72 1.72-.22.22V18H0v1.5h1.5v.08c.077.489.214.966.41 1.42L0 22.94 1.06 24l1.65-1.65A4.308 4.308 0 0 0 6 24a4.31 4.31 0 0 0 3.29-1.65L10.94 24 12 22.94 10.09 21c.198-.464.336-.951.41-1.45v-.1H12V18h-1.5v-1.5l-.22-.22L12 14.56l-1.06-1.06zM6 13.5a2.25 2.25 0 0 1 2.25 2.25h-4.5A2.25 2.25 0 0 1 6 13.5zm3 6a3.33 3.33 0 0 1-3 3 3.33 3.33 0 0 1-3-3v-2.25h6v2.25zm14.76-9.9v1.26L13.5 17.37V15.6l8.5-5.37L9 2v9.46a5.07 5.07 0 0 0-1.5-.72V.63L8.64 0l15.12 9.6z" transform="scale(0.66)"/></svg>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
+            <button class="activity-item" type="button" title="Extensions (Ctrl+Shift+X)" aria-label="Extensions">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.5 1.5L15 3v3.75L13.75 8 15 9.25V13l-1.5 1.5h-12L0 13V3l1.5-1.5h12zm-12 12h12V9.5h-3.75l-1-1V6.25l1-1h3.75V3h-12v10.5zm10.749-7.25h-3.75l-1.5 1.5v.75l1.5 1.5h3.75v-3.75z"/></svg>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
 
-            <nav class="nav-tree" aria-label="Portfolio sections" id="navTree"></nav>
+            <div class="activity-spacer"></div>
+
+            <button class="activity-item" type="button" title="Accounts" aria-label="Accounts">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M16 7.992C16 3.58 12.416 0 8 0S0 3.58 0 7.992c0 2.43 1.104 4.62 2.832 6.09.016.016.032.016.032.032.144.112.288.224.448.336.08.048.144.111.224.175A7.98 7.98 0 0 0 8.016 16a7.98 7.98 0 0 0 4.48-1.375c.08-.048.144-.111.224-.16.144-.111.304-.223.448-.335.016-.016.032-.016.032-.032 1.696-1.487 2.8-3.676 2.8-6.106zm-8 7.001c-1.504 0-2.88-.48-4.016-1.279.016-.128.048-.255.08-.383a4.17 4.17 0 0 1 .416-.991c.176-.304.384-.576.64-.816.24-.24.528-.463.816-.639.304-.176.624-.304.976-.4A4.15 4.15 0 0 1 8 10.342a4.185 4.185 0 0 1 2.928 1.166c.368.368.656.8.864 1.295.112.288.192.592.24.911A7.03 7.03 0 0 1 8 14.993zm-2.448-7.4a2.49 2.49 0 0 1-.208-1.024c0-.351.064-.703.208-1.023.144-.32.336-.607.576-.847.24-.24.528-.431.848-.575.32-.144.672-.208 1.024-.208.368 0 .704.064 1.024.208.32.144.608.336.848.575.24.24.432.528.576.847.144.32.208.672.208 1.023 0 .368-.064.704-.208 1.023a2.84 2.84 0 0 1-.576.848 2.84 2.84 0 0 1-.848.575 2.715 2.715 0 0 1-2.064 0 2.84 2.84 0 0 1-.848-.575 2.526 2.526 0 0 1-.56-.848zm6.96 6.42c-.288-.4-.624-.768-1.024-1.103a5.49 5.49 0 0 0-1.232-.769c.288-.207.544-.448.768-.72A4.04 4.04 0 0 0 11.04 7.6c.144-.464.224-.96.224-1.456a4.04 4.04 0 0 0-.336-1.6 4.06 4.06 0 0 0-.864-1.327 4.193 4.193 0 0 0-1.328-.879 4.018 4.018 0 0 0-1.6-.32c-.576 0-1.12.111-1.616.32-.512.207-.944.495-1.328.879-.384.383-.672.831-.88 1.327a4.06 4.06 0 0 0-.32 1.6c0 .496.08.992.224 1.456.144.464.352.88.624 1.263.224.272.48.513.768.72-.448.192-.864.448-1.232.769-.4.336-.736.703-1.024 1.103A6.99 6.99 0 0 1 1.024 8c0-.943.176-1.84.544-2.687.336-.816.816-1.55 1.408-2.175a6.553 6.553 0 0 1 2.176-1.424A6.59 6.59 0 0 1 7.792.992c.943 0 1.84.176 2.688.544.816.336 1.552.816 2.176 1.408a6.553 6.553 0 0 1 1.424 2.176A6.59 6.59 0 0 1 14.624 8a6.78 6.78 0 0 1-2.112 4.978v.034z"/></svg>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
+            <button class="activity-item" type="button" title="Manage" aria-label="Manage">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M19.85 8.75l4.15.83v4.84l-4.15.83 2.35 3.52-3.43 3.43-3.52-2.35-.83 4.15H9.58l-.83-4.15-3.52 2.35-3.43-3.43 2.35-3.52L0 14.42V9.58l4.15-.83L1.8 5.23 5.23 1.8l3.52 2.35L9.58 0h4.84l.83 4.15 3.52-2.35 3.43 3.43-2.35 3.52zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" transform="scale(0.66)"/></svg>
+                <span class="activity-active-bar" aria-hidden="true"></span>
+            </button>
+        </aside>
+
+        <aside class="explorer">
+            <div class="explorer-title">
+                <span>Explorer</span>
+                <span class="explorer-actions" aria-hidden="true">
+                    <span class="explorer-dots" title="Views and More Actions">...</span>
+                </span>
+            </div>
+            <div class="explorer-section open-editors">
+                <div class="explorer-section-title">
+                    <span class="chevron">▾</span>
+                    <span>Open Editors</span>
+                </div>
+                <div class="explorer-section-body">
+                    <div class="open-editor-item active">
+                        <span class="oe-close" aria-hidden="true">×</span>
+                        <span class="file-icon icon-js" aria-hidden="true">JS</span>
+                        <span>portfolio.js</span>
+                    </div>
+                    <div class="open-editor-item dirty" id="openEditorActive">
+                        <span class="oe-close" aria-hidden="true">●</span>
+                        <span class="file-icon icon-md" aria-hidden="true">MD</span>
+                        <span id="openEditorActiveLabel">01_working_on.md</span>
+                    </div>
+                </div>
+            </div>
+            <div class="explorer-section">
+                <div class="explorer-section-title">
+                    <span class="chevron">▾</span>
+                    <span>WyattDave</span>
+                    <span class="section-actions" aria-hidden="true">
+                        <span title="New File">⊕</span>
+                        <span title="New Folder">▢</span>
+                        <span title="Refresh">↻</span>
+                        <span title="Collapse All">⇲</span>
+                    </span>
+                </div>
+                <div class="repo-root">
+                    <span class="chevron">▾</span>
+                    <span class="folder-icon" aria-hidden="true">📁</span>
+                    <span>wyattdave</span>
+                </div>
+
+                <nav class="nav-tree" aria-label="Portfolio sections" id="navTree"></nav>
+            </div>
+
+            <div class="explorer-section">
+                <div class="explorer-section-title">
+                    <span class="chevron">▾</span>
+                    <span>Outline</span>
+                </div>
+                <div class="outline-list">
+                    <div class="outline-item"><span class="outline-icon">{ }</span><span>portfolio</span></div>
+                    <div class="outline-item indent-1"><span class="outline-icon">{ }</span><span>sections[]</span></div>
+                    <div class="outline-item indent-2"><span class="outline-icon">ƒ</span><span>render()</span></div>
+                    <div class="outline-item indent-2"><span class="outline-icon">ƒ</span><span>setActive()</span></div>
+                </div>
+            </div>
+
+            <div class="explorer-section">
+                <div class="explorer-section-title">
+                    <span class="chevron">▸</span>
+                    <span>Timeline</span>
+                </div>
+            </div>
 
             <div class="panel-title">About</div>
             <div class="profile-dock">
@@ -91,10 +185,29 @@
         </aside>
 
         <main class="editor">
-            <div class="tabs">
-                <div class="tab active"><span class="tab-dot">●</span><span>portfolio.js</span></div>
-                <div class="tab" id="activeTabLabel"><span class="tab-dot">●</span><span>01_working_on.md</span></div>
+            <div class="tabs" role="tablist">
+                <div class="tab" role="tab">
+                    <span class="file-icon icon-js" aria-hidden="true">JS</span>
+                    <span>portfolio.js</span>
+                    <span class="tab-close" title="Close" aria-hidden="true">×</span>
+                </div>
+                <div class="tab active" id="activeTabLabel" role="tab" aria-selected="true">
+                    <span class="file-icon icon-md" aria-hidden="true">MD</span>
+                    <span id="activeTabLabelText">01_working_on.md</span>
+                    <span class="tab-close dirty" title="Unsaved" aria-hidden="true">●</span>
+                </div>
+                <div class="tabs-actions" aria-hidden="true">
+                    <span title="Split Editor">⊟</span>
+                    <span title="More Actions">⋯</span>
+                </div>
             </div>
+            <nav class="breadcrumbs" aria-label="Breadcrumbs">
+                <span class="crumb"><span class="folder-icon" aria-hidden="true">📁</span>wyattdave</span>
+                <span class="crumb-sep">›</span>
+                <span class="crumb"><span class="file-icon icon-md" aria-hidden="true">MD</span><span id="breadcrumbCurrent">01_working_on.md</span></span>
+                <span class="crumb-sep">›</span>
+                <span class="crumb crumb-symbol">{ } portfolio</span>
+            </nav>
             <div class="status-bar">
                 <span class="status-chip">branch: main</span>
                 <span class="status-chip">focus: tools + writing + experiments</span>
@@ -263,6 +376,44 @@
                 </section>
             </div>
         </main>
+
+        <footer class="vscode-statusbar" role="status" aria-label="Status Bar">
+            <div class="sb-left">
+                <span class="sb-item sb-remote" title="Open a Remote Window">
+                    <span class="sb-icon">&gt;&lt;</span>
+                </span>
+                <span class="sb-item" title="Source Control">
+                    <span class="sb-icon">⑂</span>
+                    <span>main</span>
+                    <span class="sb-icon sb-rotate">⟳</span>
+                    <span>0↓ 0↑</span>
+                </span>
+                <span class="sb-item" title="No Problems">
+                    <span class="sb-icon">⊘</span> 0
+                    <span class="sb-icon">⚠</span> 0
+                </span>
+                <span class="sb-item" title="Ports">
+                    <span class="sb-icon">⊕</span> Live Server : 5500
+                </span>
+            </div>
+            <div class="sb-right">
+                <span class="sb-item" title="Backers">
+                    <a class="sb-link" href="#top">↑ top</a>
+                </span>
+                <span class="sb-item" title="GitHub">
+                    <a class="sb-link" href="https://github.com/wyattdave/" target="_blank" rel="noreferrer">github.com/wyattdave</a>
+                </span>
+                <span class="sb-item" title="Power DevBox">
+                    <a class="sb-link" href="https://powerdevbox.com" target="_blank" rel="noreferrer">powerdevbox.com</a>
+                </span>
+                <span class="sb-item">Ln <span id="sbLine">1</span>, Col <span id="sbCol">1</span></span>
+                <span class="sb-item">Spaces: 4</span>
+                <span class="sb-item">UTF-8</span>
+                <span class="sb-item">LF</span>
+                <span class="sb-item sb-lang">{ } JavaScript</span>
+                <span class="sb-item" title="Notifications">🔔</span>
+            </div>
+        </footer>
     </div>
 
     <footer>

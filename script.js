@@ -11,7 +11,14 @@ const packagePreview = document.getElementById('packagePreview');
 const copyPackageJsonButton = document.getElementById('copyPackageJson');
 const packageGeneratorStatus = document.getElementById('packageGeneratorStatus');
 const launchButtons = Array.from(document.querySelectorAll('[data-open-section]'));
-const activeTabLabel = document.getElementById('activeTabLabel').querySelector('span:last-child');
+const activeTabLabel = document.getElementById('activeTabLabelText') || document.getElementById('activeTabLabel').querySelector('span:last-child');
+const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+const openEditorActiveLabel = document.getElementById('openEditorActiveLabel');
+const setActiveLabels = (text) => {
+    if (activeTabLabel) activeTabLabel.textContent = text;
+    if (breadcrumbCurrent) breadcrumbCurrent.textContent = text;
+    if (openEditorActiveLabel) openEditorActiveLabel.textContent = text;
+};
 let navLinks = [];
 let sections = [];
 let configuredSections = [];
@@ -411,7 +418,7 @@ const buildConfiguredSections = () => {
 
     renderNavigation(configuredSections[0]?.id || 'blogs');
     sections = Array.from(document.querySelectorAll('.code-file'));
-    activeTabLabel.textContent = configuredSections[0]?.dataFile || blogSection.dataset.file;
+    setActiveLabels(configuredSections[0]?.dataFile || blogSection.dataset.file);
 
     const defaultSectionId = configuredSections[0]?.id || 'blogs';
     launchButtons.forEach((button) => {
@@ -434,7 +441,7 @@ const setActiveSection = (sectionId) => {
         const active = link.dataset.panel === sectionId;
         link.classList.toggle('active', active);
         if (active) {
-            activeTabLabel.textContent = document.getElementById(sectionId).dataset.file;
+            setActiveLabels(document.getElementById(sectionId).dataset.file);
         }
     });
 };

@@ -316,7 +316,8 @@ body.crt-phase-startup .workspace-shell::before {
     position: relative;
     z-index: 1;
     display: none;
-    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-columns: 48px 240px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) 22px;
     min-height: 100vh;
     background: var(--editor-bg);
     position: fixed;
@@ -331,11 +332,14 @@ body.view-workspace .workspace-shell {
 }
 
 .explorer {
-    position: sticky;
-    top: 0;
-    align-self: start;
-    height: 100vh;
-    padding: 1rem 0 0;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0 0;
     background: var(--editor-panel);
     border-right: 1px solid var(--editor-border);
 }
@@ -412,10 +416,13 @@ body.view-workspace .workspace-shell {
 }
 
 .editor {
+    grid-column: 3;
+    grid-row: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    min-height: 0;
 }
 
 .tabs {
@@ -1176,6 +1183,555 @@ body.view-workspace .workspace-shell {
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.8rem;
     color: #ffffff;
+}
+
+footer {
+    display: none;
+}
+
+/* ============================================================
+   VS Code shell — activity bar, explorer chrome, breadcrumbs,
+   tab close buttons, custom scrollbars, bottom status bar.
+   Purely additive styling; does not alter any existing
+   .section-content / .code-file / .nav-link rules above.
+   ============================================================ */
+
+/* Activity bar */
+.activity-bar {
+    grid-column: 1;
+    grid-row: 1;
+    background: #333333;
+    border-right: 1px solid #2b2b2b;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 4px 0;
+    color: rgba(255, 255, 255, 0.55);
+    user-select: none;
+}
+
+.activity-item {
+    position: relative;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s ease;
+}
+
+.activity-item svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+.activity-item:hover,
+.activity-item:focus-visible {
+    color: #ffffff;
+    outline: none;
+}
+
+.activity-item.active {
+    color: #ffffff;
+}
+
+.activity-active-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: transparent;
+}
+
+.activity-item.active .activity-active-bar {
+    background: #ffffff;
+}
+
+.activity-bullet {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: #007acc;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 8px;
+    min-width: 14px;
+    text-align: center;
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
+.activity-spacer {
+    flex: 1;
+}
+
+/* Explorer enhancements */
+.explorer-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 1rem 0.5rem;
+}
+
+.explorer-title > span:first-child {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+}
+
+.explorer-actions,
+.section-actions {
+    display: inline-flex;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.explorer-section:hover .section-actions,
+.explorer-title:hover .explorer-actions {
+    opacity: 1;
+}
+
+.explorer-section {
+    border-top: 1px solid #1f1f1f;
+}
+
+.explorer-section:first-of-type {
+    border-top: 0;
+}
+
+.explorer-section-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px 4px 6px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #cccccc;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    height: 22px;
+}
+
+.explorer-section-title .chevron {
+    width: 14px;
+    text-align: center;
+    color: #cccccc;
+    font-size: 9px;
+}
+
+.explorer-section-title > span:nth-child(2) {
+    flex: 1;
+}
+
+.explorer-section-body {
+    padding: 2px 0 4px;
+}
+
+.open-editor-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 12px 2px 22px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    color: #cccccc;
+    cursor: pointer;
+    line-height: 22px;
+    height: 22px;
+}
+
+.open-editor-item:hover {
+    background: #2a2d2e;
+}
+
+.open-editor-item.active {
+    background: #37373d;
+    color: #ffffff;
+}
+
+.oe-close {
+    width: 14px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.open-editor-item.dirty .oe-close {
+    color: #cccccc;
+    font-size: 10px;
+}
+
+.open-editor-item:hover .oe-close {
+    color: #ffffff;
+}
+
+/* File-type icons (simple two-letter chips like Codicon fallbacks) */
+.file-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8px;
+    font-weight: 700;
+    color: #ffffff;
+    border-radius: 2px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.file-icon.icon-js { background: #f5d061; color: #1a1a1a; }
+.file-icon.icon-md { background: #519aba; }
+.file-icon.icon-json { background: #cbcb41; color: #1a1a1a; }
+.file-icon.icon-css { background: #519aba; }
+.file-icon.icon-html { background: #e44d26; }
+
+/* Repo root row — keep minimal indent like a tree node */
+.repo-root {
+    padding: 4px 12px 4px 6px;
+    gap: 4px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    color: #cccccc;
+}
+
+.repo-root .chevron {
+    width: 14px;
+    text-align: center;
+    font-size: 9px;
+    color: #cccccc;
+}
+
+/* Nav links — re-tune to be more file-tree-like (additive override) */
+.nav-tree {
+    padding: 0 0 4px;
+}
+
+.nav-link {
+    padding: 2px 12px 2px 30px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    color: #cccccc;
+    border-left: 0;
+    line-height: 22px;
+    min-height: 22px;
+    gap: 6px;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+    background: #2a2d2e;
+    color: #ffffff;
+    border-left: 0;
+}
+
+.nav-link.active {
+    background: #37373d;
+    color: #ffffff;
+    border-left: 0;
+}
+
+.nav-link .icon {
+    color: #519aba;
+    width: 16px;
+    text-align: center;
+    font-size: 11px;
+}
+
+/* Outline pane */
+.outline-list {
+    padding: 2px 0 6px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    color: #cccccc;
+}
+
+.outline-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 12px 2px 22px;
+    height: 22px;
+    cursor: default;
+}
+
+.outline-item:hover {
+    background: #2a2d2e;
+}
+
+.outline-item.indent-1 { padding-left: 38px; }
+.outline-item.indent-2 { padding-left: 54px; }
+
+.outline-icon {
+    color: #b180d7;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    width: 16px;
+    text-align: center;
+}
+
+.outline-item:nth-child(odd) .outline-icon { color: #75beff; }
+
+/* Tabs — closer to VS Code chrome */
+.tabs {
+    background: #252526;
+    height: 35px;
+    align-items: stretch;
+    position: relative;
+}
+
+.tab {
+    height: 35px;
+    padding: 0 10px 0 12px;
+    border-top: 1px solid transparent;
+    border-right: 1px solid #252526;
+    background: #2d2d2d;
+    color: #969696;
+    font-size: 13px;
+    font-family: "IBM Plex Sans", sans-serif;
+    gap: 6px;
+}
+
+.tab.active {
+    background: var(--editor-bg);
+    color: #ffffff;
+    border-top-color: var(--accent);
+    border-right: 1px solid #252526;
+}
+
+.tab-close {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: transparent;
+    font-size: 14px;
+    line-height: 1;
+    margin-left: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tab:hover .tab-close,
+.tab.active .tab-close {
+    color: #cccccc;
+}
+
+.tab-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.tab-close.dirty {
+    color: #cccccc;
+    font-size: 10px;
+}
+
+.tabs-actions {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    color: #cccccc;
+    font-size: 13px;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    padding: 0 12px;
+    background: var(--editor-bg);
+    border-bottom: 1px solid #1f1f1f;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    color: #cccccc;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.breadcrumbs::-webkit-scrollbar { height: 0; }
+
+.crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    cursor: default;
+}
+
+.crumb:hover {
+    background: #2a2d2e;
+}
+
+.crumb-symbol {
+    color: #b180d7;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.crumb-sep {
+    color: #6f6f6f;
+}
+
+.folder-icon {
+    color: #dcb67a;
+    font-size: 12px;
+}
+
+/* Bottom VS Code status bar */
+.vscode-statusbar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 22px;
+    background: #007acc;
+    color: #ffffff;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 12px;
+    padding: 0;
+    z-index: 10;
+}
+
+.vscode-statusbar .sb-left,
+.vscode-statusbar .sb-right {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+}
+
+.sb-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 8px;
+    height: 100%;
+    line-height: 22px;
+    cursor: default;
+    transition: background 0.12s ease;
+}
+
+.sb-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.sb-icon {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.sb-rotate {
+    display: inline-block;
+    transform-origin: 50% 55%;
+}
+
+.sb-remote {
+    background: #16825d;
+}
+
+.sb-remote:hover {
+    background: #1f9d72;
+}
+
+.sb-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.sb-lang {
+    font-family: "IBM Plex Mono", monospace;
+}
+
+/* Pull existing in-editor info bar to feel like a sub-toolbar */
+.status-bar {
+    height: 26px;
+    padding: 0 12px;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    background: #1e1e1e;
+    border-bottom: 1px solid #1f1f1f;
+}
+
+.status-bar::-webkit-scrollbar { height: 0; }
+
+/* Custom scrollbars (VS Code style) */
+.explorer::-webkit-scrollbar,
+.editor-scroll::-webkit-scrollbar,
+.section-content::-webkit-scrollbar,
+.tabs::-webkit-scrollbar {
+    width: 14px;
+    height: 10px;
+    background: transparent;
+}
+
+.explorer::-webkit-scrollbar-thumb,
+.editor-scroll::-webkit-scrollbar-thumb,
+.section-content::-webkit-scrollbar-thumb,
+.tabs::-webkit-scrollbar-thumb {
+    background: rgba(121, 121, 121, 0.4);
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    border-radius: 7px;
+}
+
+.explorer::-webkit-scrollbar-thumb:hover,
+.editor-scroll::-webkit-scrollbar-thumb:hover,
+.section-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 100, 100, 0.7);
+    background-clip: padding-box;
+}
+
+/* Minimap hint (cosmetic strip on right of editor scroll) */
+.editor-scroll {
+    padding-right: 60px;
+}
+
+.editor-scroll::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    pointer-events: none;
+    background:
+        linear-gradient(180deg,
+            rgba(212, 212, 212, 0.18) 0 1px, transparent 1px 4px,
+            rgba(212, 212, 212, 0.10) 4px 6px, transparent 6px 9px,
+            rgba(212, 212, 212, 0.16) 9px 11px, transparent 11px 14px,
+            rgba(212, 212, 212, 0.06) 14px 17px, transparent 17px 20px,
+            rgba(212, 212, 212, 0.14) 20px 22px, transparent 22px 26px,
+            rgba(212, 212, 212, 0.10) 26px 27px, transparent 27px 31px,
+            rgba(212, 212, 212, 0.18) 31px 33px, transparent 33px 38px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02));
+    background-size: 100% 38px, 100% 100%;
+    background-repeat: repeat-y, no-repeat;
+    border-left: 1px solid #1f1f1f;
+    opacity: 0.85;
 }
 
 footer {
