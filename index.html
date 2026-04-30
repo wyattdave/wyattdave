@@ -310,11 +310,11 @@
             </header>
             <div class="pa-chatbot-agent">
                 <div class="pa-chatbot-avatar" aria-hidden="true">😎</div>
-                <div class="pa-chatbot-agent-name">Virtual Agent</div>
+                <div class="pa-chatbot-agent-name">Virtual Jack</div>
                 <div class="pa-chatbot-greeting">Hi!</div>
             </div>
             <div class="pa-chatbot-messages" id="chatbotMessages">
-                <div class="pa-chatbot-msg pa-chatbot-msg-bot">Hello! I'm the WyattDave Portfolio Virtual Agent.</div>
+                <div class="pa-chatbot-msg pa-chatbot-msg-bot">Hello! I'm the WyattDave Portfolio Virtual Jack.</div>
                 <div class="pa-chatbot-msg pa-chatbot-msg-bot">
                     I'm free so Im not the fastest, or best, but give me a chance. 
                 </div>
@@ -344,6 +344,9 @@
             const input = document.getElementById('chatbotInput');
             const messages = document.getElementById('chatbotMessages');
             const sendBtn = form ? form.querySelector('button[type="submit"]') : null;
+            const DEVTO_ARTICLE_API = (id) => `https://dev.to/api/articles/${encodeURIComponent(id)}`;
+            const DEVTO_API_ACCEPT = 'application/vnd.forem.api-v1+json';
+            const MAX_TOOL_HOPS = 3;
 
             // Conversation history sent to the Worker (excludes UI-only intro bubbles).
             const history = [];
@@ -530,6 +533,52 @@
                 if (sendBtn) sendBtn.disabled = busy;
             };
 
+            const fetchDevtoArticleById = async (id) => {
+                const apiUrl = DEVTO_ARTICLE_API(id);
+                const response = await fetch(apiUrl, {
+                    headers: { Accept: DEVTO_API_ACCEPT }
+                });
+
+                if (!response.ok) {
+                    return {
+                        id,
+                        api_url: apiUrl,
+                        status: response.status,
+                        error: `dev.to article ${id} returned ${response.status}`
+                    };
+                }
+
+                const article = await response.json();
+                return {
+                    id: article.id,
+                    title: article.title,
+                    description: article.description,
+                    url: article.url,
+                    api_url: apiUrl,
+                    tags: article.tags,
+                    published_at: article.published_at,
+                    reading_time_minutes: article.reading_time_minutes,
+                    body_markdown: article.body_markdown
+                };
+            };
+
+            const runClientToolCall = async (call) => {
+                const name = call && call.function && call.function.name;
+                let args = {};
+
+                try {
+                    args = JSON.parse((call && call.function && call.function.arguments) || '{}');
+                } catch (error) {
+                    args = {};
+                }
+
+                if (name === 'get_devto_article' && args && args.id) {
+                    return fetchDevtoArticleById(args.id);
+                }
+
+                return { error: `Unknown tool '${name || 'unknown'}'.` };
+            };
+
             // Trim the local portfolio config to a compact context payload.
             const buildPortfolioContext = () => {
                 const cfg = (typeof sectionConfig !== 'undefined' && Array.isArray(sectionConfig.sections))
@@ -589,22 +638,51 @@
                 await ensureContextMessages();
                 history.push({ role: 'user', content: userText });
 
-                const res = await fetch(window.CHATBOT_ENDPOINT, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ messages: history })
-                });
+                for (let hop = 0; hop < MAX_TOOL_HOPS; hop += 1) {
+                    const res = await fetch(window.CHATBOT_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ messages: history, clientTools: true })
+                    });
 
-                const text = await res.text();
-                let data = null;
-                try { data = JSON.parse(text); } catch (e) { /* non-JSON */ }
+                    const text = await res.text();
+                    let data = null;
+                    try { data = JSON.parse(text); } catch (e) { /* non-JSON */ }
 
-                if (!res.ok) {
-                    throw new Error((data && data.error) || ('Request failed: ' + res.status));
+                    if (!res.ok) {
+                        throw new Error((data && data.error) || ('Request failed: ' + res.status));
+                    }
+
+                    const toolCalls = Array.isArray(data && data.tool_calls) ? data.tool_calls : [];
+                    if (!toolCalls.length) {
+                        const reply = (data && data.reply) || '';
+                        if (reply) history.push({ role: 'assistant', content: reply });
+                        return reply || 'No reply.';
+                    }
+
+                    const assistantMessage = data && data.assistant
+                        ? {
+                            role: 'assistant',
+                            content: typeof data.assistant.content === 'string' ? data.assistant.content : '',
+                            tool_calls: toolCalls
+                        }
+                        : { role: 'assistant', content: '', tool_calls: toolCalls };
+
+                    history.push(assistantMessage);
+
+                    for (const call of toolCalls) {
+                        const toolName = call && call.function ? call.function.name : 'unknown';
+                        const toolResult = await runClientToolCall(call);
+                        history.push({
+                            role: 'tool',
+                            tool_call_id: call.id,
+                            name: toolName,
+                            content: JSON.stringify(toolResult)
+                        });
+                    }
                 }
-                const reply = (data && data.reply) || '';
-                if (reply) history.push({ role: 'assistant', content: reply });
-                return reply || 'No reply.';
+
+                throw new Error('Tool loop exceeded maximum hops.');
             };
 
             if (form) {

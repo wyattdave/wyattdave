@@ -61,6 +61,36 @@ const json = (body, init = {}, cors = {}) =>
         }
     });
 
+const normalizeIncomingMessage = (message) => {
+    if (!message || typeof message.role !== "string") {
+        return null;
+    }
+
+    if (typeof message.content !== "string") {
+        return null;
+    }
+
+    const normalized = {
+        role: message.role,
+        content: message.content
+    };
+
+    if (message.role === "assistant" && Array.isArray(message.tool_calls)) {
+        normalized.tool_calls = message.tool_calls;
+    }
+
+    if (message.role === "tool") {
+        if (typeof message.tool_call_id !== "string" || typeof message.name !== "string") {
+            return null;
+        }
+
+        normalized.tool_call_id = message.tool_call_id;
+        normalized.name = message.name;
+    }
+
+    return normalized;
+};
+
 /* --------------------------- dev.to context ------------------------ */
 
 let articleCache = { at: 0, data: null, username: "" };
@@ -123,11 +153,19 @@ const fetchArticleById = async (id) => {
         headers: { Accept: "application/json" }
     });
     if (!response.ok) {
+        const responseText = await response.text();
         return {
             id,
             api_url,
             status: response.status,
-            error: `dev.to article ${id} returned ${response.status}`
+            error: `dev.to article ${id} returned ${response.status}`,
+            response_headers: {
+                content_type: response.headers.get("content-type"),
+                server: response.headers.get("server"),
+                via: response.headers.get("via"),
+                x_request_id: response.headers.get("x-request-id")
+            },
+            response_text: responseText.slice(0, 500)
         };
     }
     const article = await response.json();
@@ -208,6 +246,8 @@ const handleChat = async (request, env, corsHeaders) => {
         );
     }
 
+    const clientTools = payload?.clientTools === true;
+
     const username = env.DEVTO_USERNAME || "wyattdave";
     let articleContext = [];
     try {
@@ -228,8 +268,8 @@ const handleChat = async (request, env, corsHeaders) => {
     const messages = [
         { role: "system", content: systemPrompt },
         ...userMessages
-            .filter((m) => m && typeof m.role === "string" && typeof m.content === "string")
-            .map((m) => ({ role: m.role, content: m.content }))
+            .map(normalizeIncomingMessage)
+            .filter(Boolean)
     ];
 
     // Tool-use loop. Cap iterations to avoid runaway calls.
@@ -252,6 +292,23 @@ const handleChat = async (request, env, corsHeaders) => {
             return json(
                 {
                     reply: message.content || "",
+                    model: completion.model,
+                    usage: completion.usage
+                },
+                {},
+                corsHeaders
+            );
+        }
+
+        if (clientTools) {
+            return json(
+                {
+                    assistant: {
+                        role: "assistant",
+                        content: message.content || "",
+                        tool_calls: toolCalls
+                    },
+                    tool_calls: toolCalls,
                     model: completion.model,
                     usage: completion.usage
                 },

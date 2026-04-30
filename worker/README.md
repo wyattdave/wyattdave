@@ -5,6 +5,11 @@ site. It calls an OpenRouter free-tier model, augments the prompt with a list
 of recent dev.to articles, and exposes a single tool the model can call to
 fetch a full article body when the listing is not enough.
 
+When the site sends `clientTools: true`, the Worker returns model tool calls to
+the browser instead of executing them server-side. The portfolio page uses that
+mode for `get_devto_article` so the browser can fetch dev.to directly and avoid
+Worker-origin 403s from the article endpoint.
+
 ## Files
 
 - [src/index.js](src/index.js) — Worker entry point, CORS, tool loop.
