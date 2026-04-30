@@ -61,6 +61,117 @@ const json = (body, init = {}, cors = {}) =>
         }
     });
 
+const ARTICLE_MATCH_STOP_WORDS = new Set([
+    "a", "an", "and", "are", "article", "articles", "ask", "about", "body", "blog", "blogs",
+    "content", "david", "details", "does", "for", "from", "full", "general", "his", "how",
+    "i", "in", "is", "it", "knowledge", "me", "not", "of", "on", "or", "post", "posts",
+    "should", "the", "their", "them", "to", "use", "what", "when", "where", "which", "with",
+    "wrote", "written", "write", "writing", "you"
+]);
+
+const findLatestUserMessageIndex = (messages) => {
+    for (let index = messages.length - 1; index >= 0; index -= 1) {
+        if (messages[index]?.role === "user" && typeof messages[index]?.content === "string") {
+            return index;
+        }
+    }
+
+    return -1;
+};
+
+const latestUserTurnHasDevtoToolResult = (messages) => {
+    const latestUserIndex = findLatestUserMessageIndex(messages);
+    if (latestUserIndex === -1) {
+        return false;
+    }
+
+    return messages.slice(latestUserIndex + 1).some((message) =>
+        message?.role === "tool" && message?.name === "get_devto_article"
+    );
+};
+
+const latestUserTurnNeedsArticleBody = (messages) => {
+    const latestUserIndex = findLatestUserMessageIndex(messages);
+    if (latestUserIndex === -1 || latestUserTurnHasDevtoToolResult(messages)) {
+        return false;
+    }
+
+    const content = String(messages[latestUserIndex].content || "").toLowerCase();
+    const mentionsWrittenMaterial = /\b(article|articles|blog|blogs|post|posts|dev\.to|written|wrote|write|writing)\b/i.test(content);
+    const mentionsDavidInterpretation = /\bdavid\b/i.test(content)
+        && /\b(argue|argues|think|thinks|say|says|said|explain|explains|summary|summari[sz]e|detail|details|opinion|recommend|recommends|why|how|change|changes|should)\b/i.test(content);
+    const explicitlyRequestsArticleGrounding = /\b(use the article|use article|article content|full article|article body|from the article|from his article)\b/i.test(content);
+
+    return explicitlyRequestsArticleGrounding || mentionsDavidInterpretation || mentionsWrittenMaterial;
+};
+
+const getLatestUserMessageContent = (messages) => {
+    const latestUserIndex = findLatestUserMessageIndex(messages);
+    if (latestUserIndex === -1) {
+        return "";
+    }
+
+    return String(messages[latestUserIndex].content || "");
+};
+
+const tokenizeArticleMatchQuery = (value) => String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .split(/\s+/)
+    .filter((token) => token.length >= 3 && !ARTICLE_MATCH_STOP_WORDS.has(token));
+
+const scoreArticleMatch = (article, tokens) => {
+    const title = String(article?.title || "").toLowerCase();
+    const description = String(article?.description || "").toLowerCase();
+    const tags = Array.isArray(article?.tag_list)
+        ? article.tag_list.join(" ").toLowerCase()
+        : String(article?.tag_list || "").toLowerCase();
+
+    let score = 0;
+    for (const token of tokens) {
+        if (title.includes(token)) {
+            score += 4;
+        }
+        if (description.includes(token)) {
+            score += 2;
+        }
+        if (tags.includes(token)) {
+            score += 3;
+        }
+    }
+
+    return score;
+};
+
+const findBestMatchingArticle = (articles, query) => {
+    const tokens = tokenizeArticleMatchQuery(query);
+    if (!tokens.length) {
+        return null;
+    }
+
+    let bestArticle = null;
+    let bestScore = 0;
+
+    for (const article of articles) {
+        const score = scoreArticleMatch(article, tokens);
+        if (score > bestScore) {
+            bestScore = score;
+            bestArticle = article;
+        }
+    }
+
+    return bestScore >= 4 ? bestArticle : null;
+};
+
+const buildDevtoToolCall = (id) => ({
+    type: "function",
+    id: `forced-devto-article-${id}`,
+    function: {
+        name: "get_devto_article",
+        arguments: JSON.stringify({ id })
+    }
+});
+
 const normalizeIncomingMessage = (message) => {
     if (!message || typeof message.role !== "string") {
         return null;
@@ -184,7 +295,7 @@ const fetchArticleById = async (id) => {
 
 /* ------------------------ OpenRouter helpers ----------------------- */
 
-const callOpenRouter = async (env, messages) => {
+const callOpenRouter = async (env, messages, toolChoice = "auto") => {
     if (!env.OPENROUTER_API_KEY) {
         throw new Error("OPENROUTER_API_KEY binding is not set.");
     }
@@ -211,7 +322,7 @@ const callOpenRouter = async (env, messages) => {
             model: env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free",
             messages,
             tools: TOOLS,
-            tool_choice: "auto",
+            tool_choice: toolChoice,
             temperature: 0.4
         })
     });
@@ -272,10 +383,52 @@ const handleChat = async (request, env, corsHeaders) => {
             .filter(Boolean)
     ];
 
+    const forceDevtoToolOnFirstHop = latestUserTurnNeedsArticleBody(userMessages);
+    const forcedArticle = forceDevtoToolOnFirstHop
+        ? findBestMatchingArticle(articleContext, getLatestUserMessageContent(userMessages))
+        : null;
+
     // Tool-use loop. Cap iterations to avoid runaway calls.
     const MAX_HOPS = 3;
     for (let hop = 0; hop < MAX_HOPS; hop += 1) {
-        const completion = await callOpenRouter(env, messages);
+        if (hop === 0 && forcedArticle) {
+            const toolCall = buildDevtoToolCall(forcedArticle.id);
+
+            if (clientTools) {
+                return json(
+                    {
+                        assistant: {
+                            role: "assistant",
+                            content: "",
+                            tool_calls: [toolCall]
+                        },
+                        tool_calls: [toolCall],
+                        model: "forced-devto-router",
+                        usage: null
+                    },
+                    {},
+                    corsHeaders
+                );
+            }
+
+            messages.push({
+                role: "assistant",
+                content: "",
+                tool_calls: [toolCall]
+            });
+
+            const toolResult = await fetchArticleById(forcedArticle.id);
+            messages.push({
+                role: "tool",
+                tool_call_id: toolCall.id,
+                name: "get_devto_article",
+                content: JSON.stringify(toolResult)
+            });
+            continue;
+        }
+
+        const toolChoice = hop === 0 && forceDevtoToolOnFirstHop ? "required" : "auto";
+        const completion = await callOpenRouter(env, messages, toolChoice);
         const choice = completion?.choices?.[0];
         const message = choice?.message;
 

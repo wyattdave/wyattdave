@@ -7,6 +7,7 @@
     <title>Wyatt Dave | Portfolio</title>
     <meta name="description"
         content="Wyatt Dave's portfolio site styled like make.powerautomate.com — covering Power DevBox, Code Apps, PP:Undoc, blogs, solutions, tools, white papers, and a Sinclair Spectrum-inspired game.">
+    <link rel="icon" type="image/png" href="img/dev.to.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -55,7 +56,8 @@
     <div class="workspace-shell" id="workspace">
         <header class="pa-topbar" role="banner">
             <div class="pa-topbar-left">
-                <button class="pa-waffle" type="button" aria-label="App launcher">
+                <button class="pa-waffle" id="appLauncherButton" type="button" aria-label="App launcher"
+                    aria-haspopup="dialog" aria-expanded="false" aria-controls="appLauncherPopup">
                     <span></span><span></span><span></span>
                     <span></span><span></span><span></span>
                     <span></span><span></span><span></span>
@@ -83,6 +85,17 @@
                 <button class="pa-avatar" type="button" title="Account" aria-label="Account">DW</button>
             </div>
         </header>
+
+        <div class="pa-app-launcher" id="appLauncherPopup" role="dialog" aria-labelledby="appLauncherTitle" hidden>
+            <div class="pa-app-launcher-header">
+                <div>
+                    <p class="pa-app-launcher-eyebrow">Power DevBox network</p>
+                    <h2 id="appLauncherTitle">Open an app</h2>
+                </div>
+                <button class="pa-app-launcher-close" id="appLauncherClose" type="button" aria-label="Close app launcher">✕</button>
+            </div>
+            <div class="pa-app-launcher-grid" id="appLauncherGrid"></div>
+        </div>
 
         <aside class="pa-rail" id="paRail" aria-label="Primary navigation">
             <button class="pa-rail-toggle" type="button" aria-label="Toggle menu" id="paRailToggle">≡</button>
@@ -320,8 +333,8 @@
                 </div>
             </div>
             <form class="pa-chatbot-input" id="chatbotForm">
-                <input type="text" id="chatbotInput" placeholder="Type your message" aria-label="Type your message"
-                    autocomplete="off">
+                <textarea id="chatbotInput" placeholder="Type your message" aria-label="Type your message"
+                    autocomplete="off" rows="3"></textarea>
                 <button type="submit" class="pa-chatbot-send" aria-label="Send">
                     <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M1 1l14 7-14 7 3-7z"/></svg>
                 </button>
@@ -369,6 +382,18 @@
 
             if (launcher) launcher.addEventListener('click', toggleChat);
             if (closeBtn) closeBtn.addEventListener('click', closeChat);
+            if (input) {
+                input.addEventListener('keydown', (event) => {
+                    if (event.key !== 'Enter' || event.shiftKey || event.isComposing) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    if (!inFlight) {
+                        form.requestSubmit();
+                    }
+                });
+            }
 
             const appendMessage = (text, who) => {
                 const node = document.createElement('div');
@@ -719,6 +744,102 @@
             const toggle = document.getElementById('paRailToggle');
             if (!rail || !toggle) return;
             toggle.addEventListener('click', () => rail.classList.toggle('is-collapsed'));
+        })();
+
+        /* Top-left app launcher flyout */
+        (function () {
+            const launcherButton = document.getElementById('appLauncherButton');
+            const launcherPopup = document.getElementById('appLauncherPopup');
+            const launcherClose = document.getElementById('appLauncherClose');
+            const launcherGrid = document.getElementById('appLauncherGrid');
+            if (!launcherButton || !launcherPopup || !launcherGrid) return;
+
+            const apps = [
+                {
+                    name: 'AutoReview',
+                    icon: 'img/dock/autoreview.png',
+                    href: 'https://autoreview.powerdevbox.com'
+                },
+                {
+                    name: 'AutoReview Pro',
+                    icon: 'img/dock/autoreview-pro.png',
+                    href: 'https://autoreview-pro.dev'
+                },
+                {
+                    name: 'AppReview Pro',
+                    icon: 'img/dock/appreview-pro.png',
+                    href: 'https://appreview-pro.dev'
+                },
+                {
+                    name: 'Power DevBox',
+                    icon: 'img/dock/power devbox.png',
+                    href: 'https://powerdevbox.com'
+                },
+                {
+                    name: 'Power Platform Games',
+                    icon: 'img/dock/power platform games.png',
+                    href: 'https://powerplatformgames.com'
+                },
+                {
+                    name: 'Flow Utilizer',
+                    icon: 'img/dock/flow utilizer 512.png',
+                    href: 'https://flow.powerdevbox.com'
+                },
+                {
+                    name: 'Solution Explorer',
+                    icon: 'img/dock/solution explorer.png',
+                    href: 'https://solution.powerdevbox.com'
+                },
+                {
+                    name: 'PP:Undoc',
+                    icon: 'img/dock/ppundoc.png',
+                    href: 'https://ppundoc.com'
+                }
+            ];
+
+            launcherGrid.innerHTML = apps.map((app) => (
+                '<a class="pa-app-launcher-item" href="' + app.href + '" target="_blank" rel="noopener noreferrer">'
+                + '<span class="pa-app-launcher-icon"><img src="' + app.icon + '" alt="' + app.name + ' icon"></span>'
+                + '<span class="pa-app-launcher-name">' + app.name + '</span>'
+                + '</a>'
+            )).join('');
+
+            const open = () => {
+                launcherPopup.hidden = false;
+                launcherButton.setAttribute('aria-expanded', 'true');
+            };
+
+            const close = () => {
+                launcherPopup.hidden = true;
+                launcherButton.setAttribute('aria-expanded', 'false');
+            };
+
+            const toggle = () => (launcherPopup.hidden ? open() : close());
+
+            launcherButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggle();
+            });
+
+            if (launcherClose) {
+                launcherClose.addEventListener('click', close);
+            }
+
+            launcherGrid.addEventListener('click', () => {
+                close();
+            });
+
+            document.addEventListener('click', (event) => {
+                if (launcherPopup.hidden) return;
+                if (launcherPopup.contains(event.target) || launcherButton.contains(event.target)) return;
+                close();
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !launcherPopup.hidden) {
+                    close();
+                }
+            });
         })();
 
         /* More popup — pulls badge alts from #pills, lists icon + name (no colored shields) */

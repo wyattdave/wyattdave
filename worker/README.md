@@ -10,6 +10,11 @@ the browser instead of executing them server-side. The portfolio page uses that
 mode for `get_devto_article` so the browser can fetch dev.to directly and avoid
 Worker-origin 403s from the article endpoint.
 
+The Worker also applies a first-turn routing rule for article-content questions:
+if the latest user message is asking about what David wrote, argued,
+recommended, or said in an article, it forces a Dev.to tool call instead of
+letting the model answer from base knowledge.
+
 ## Files
 
 - [src/index.js](src/index.js) — Worker entry point, CORS, tool loop.
