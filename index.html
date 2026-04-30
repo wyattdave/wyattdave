@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wyatt Dave | Portfolio</title>
     <meta name="description"
-        content="Wyatt Dave's portfolio site covering Power DevBox, Code Apps, PP:Undoc, blogs, solutions, tools, white papers, and a Sinclair Spectrum-inspired game.">
+        content="Wyatt Dave's portfolio site styled like make.powerautomate.com — covering Power DevBox, Code Apps, PP:Undoc, blogs, solutions, tools, white papers, and a Sinclair Spectrum-inspired game.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Press+Start+2P&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -48,188 +48,114 @@
             </div>
 
             <button class="reboot-button" type="button" data-open-section="working-on">REBOOT AND LOAD
-                C:\portfolio\workspace.js</button>
+                make.powerautomate.com/wyattdave</button>
         </div>
     </header>
 
     <div class="workspace-shell" id="workspace">
-        <aside class="activity-bar" aria-label="Activity Bar">
-            <button class="activity-item active" type="button" title="Explorer (Ctrl+Shift+E)" aria-label="Explorer">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M14.5 3H7.71l-.85-.85L6.51 2h-5l-.5.5v11l.5.5h13l.5-.5v-10L14.5 3zm-.51 8.49V13h-12V7h4.49l.35-.15.86-.86H14v1.5l-.01 4zm0-6.49h-6.5l-.35.15-.86.86H2v-3h4.29l.85.85.36.15H14l-.01.99z"/></svg>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-            <button class="activity-item" type="button" title="Search (Ctrl+Shift+F)" aria-label="Search">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M15.25 0a8.25 8.25 0 0 0-6.18 13.72L1 22.88l1.12 1L10.28 14.5A8.25 8.25 0 1 0 15.25.01V0zm0 15a6.75 6.75 0 1 1 0-13.5 6.75 6.75 0 0 1 0 13.5z" transform="scale(0.66)"/></svg>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-            <button class="activity-item" type="button" title="Source Control (Ctrl+Shift+G)" aria-label="Source Control">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.5 8a2.5 2.5 0 0 0-2.45 2H10V7a2 2 0 0 0-2-2H6V3.95A2.5 2.5 0 1 0 5 4v8a2.5 2.5 0 1 0 1 0V6h2a1 1 0 0 1 1 1v3h-.05a2.5 2.5 0 1 0 0 1H9a2 2 0 0 0 2 2h.05a2.5 2.5 0 1 0 2.45-3z"/></svg>
-                <span class="activity-bullet" aria-label="2 changes">2</span>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-            <button class="activity-item" type="button" title="Run and Debug (Ctrl+Shift+D)" aria-label="Run and Debug">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M10.94 13.5l-1.32 1.32a3.73 3.73 0 0 0-7.24 0L1.06 13.5 0 14.56l1.72 1.72-.22.22V18H0v1.5h1.5v.08c.077.489.214.966.41 1.42L0 22.94 1.06 24l1.65-1.65A4.308 4.308 0 0 0 6 24a4.31 4.31 0 0 0 3.29-1.65L10.94 24 12 22.94 10.09 21c.198-.464.336-.951.41-1.45v-.1H12V18h-1.5v-1.5l-.22-.22L12 14.56l-1.06-1.06zM6 13.5a2.25 2.25 0 0 1 2.25 2.25h-4.5A2.25 2.25 0 0 1 6 13.5zm3 6a3.33 3.33 0 0 1-3 3 3.33 3.33 0 0 1-3-3v-2.25h6v2.25zm14.76-9.9v1.26L13.5 17.37V15.6l8.5-5.37L9 2v9.46a5.07 5.07 0 0 0-1.5-.72V.63L8.64 0l15.12 9.6z" transform="scale(0.66)"/></svg>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-            <button class="activity-item" type="button" title="Extensions (Ctrl+Shift+X)" aria-label="Extensions">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M13.5 1.5L15 3v3.75L13.75 8 15 9.25V13l-1.5 1.5h-12L0 13V3l1.5-1.5h12zm-12 12h12V9.5h-3.75l-1-1V6.25l1-1h3.75V3h-12v10.5zm10.749-7.25h-3.75l-1.5 1.5v.75l1.5 1.5h3.75v-3.75z"/></svg>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-
-            <div class="activity-spacer"></div>
-
-            <button class="activity-item" type="button" title="Accounts" aria-label="Accounts">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M16 7.992C16 3.58 12.416 0 8 0S0 3.58 0 7.992c0 2.43 1.104 4.62 2.832 6.09.016.016.032.016.032.032.144.112.288.224.448.336.08.048.144.111.224.175A7.98 7.98 0 0 0 8.016 16a7.98 7.98 0 0 0 4.48-1.375c.08-.048.144-.111.224-.16.144-.111.304-.223.448-.335.016-.016.032-.016.032-.032 1.696-1.487 2.8-3.676 2.8-6.106zm-8 7.001c-1.504 0-2.88-.48-4.016-1.279.016-.128.048-.255.08-.383a4.17 4.17 0 0 1 .416-.991c.176-.304.384-.576.64-.816.24-.24.528-.463.816-.639.304-.176.624-.304.976-.4A4.15 4.15 0 0 1 8 10.342a4.185 4.185 0 0 1 2.928 1.166c.368.368.656.8.864 1.295.112.288.192.592.24.911A7.03 7.03 0 0 1 8 14.993zm-2.448-7.4a2.49 2.49 0 0 1-.208-1.024c0-.351.064-.703.208-1.023.144-.32.336-.607.576-.847.24-.24.528-.431.848-.575.32-.144.672-.208 1.024-.208.368 0 .704.064 1.024.208.32.144.608.336.848.575.24.24.432.528.576.847.144.32.208.672.208 1.023 0 .368-.064.704-.208 1.023a2.84 2.84 0 0 1-.576.848 2.84 2.84 0 0 1-.848.575 2.715 2.715 0 0 1-2.064 0 2.84 2.84 0 0 1-.848-.575 2.526 2.526 0 0 1-.56-.848zm6.96 6.42c-.288-.4-.624-.768-1.024-1.103a5.49 5.49 0 0 0-1.232-.769c.288-.207.544-.448.768-.72A4.04 4.04 0 0 0 11.04 7.6c.144-.464.224-.96.224-1.456a4.04 4.04 0 0 0-.336-1.6 4.06 4.06 0 0 0-.864-1.327 4.193 4.193 0 0 0-1.328-.879 4.018 4.018 0 0 0-1.6-.32c-.576 0-1.12.111-1.616.32-.512.207-.944.495-1.328.879-.384.383-.672.831-.88 1.327a4.06 4.06 0 0 0-.32 1.6c0 .496.08.992.224 1.456.144.464.352.88.624 1.263.224.272.48.513.768.72-.448.192-.864.448-1.232.769-.4.336-.736.703-1.024 1.103A6.99 6.99 0 0 1 1.024 8c0-.943.176-1.84.544-2.687.336-.816.816-1.55 1.408-2.175a6.553 6.553 0 0 1 2.176-1.424A6.59 6.59 0 0 1 7.792.992c.943 0 1.84.176 2.688.544.816.336 1.552.816 2.176 1.408a6.553 6.553 0 0 1 1.424 2.176A6.59 6.59 0 0 1 14.624 8a6.78 6.78 0 0 1-2.112 4.978v.034z"/></svg>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-            <button class="activity-item" type="button" title="Manage" aria-label="Manage">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M19.85 8.75l4.15.83v4.84l-4.15.83 2.35 3.52-3.43 3.43-3.52-2.35-.83 4.15H9.58l-.83-4.15-3.52 2.35-3.43-3.43 2.35-3.52L0 14.42V9.58l4.15-.83L1.8 5.23 5.23 1.8l3.52 2.35L9.58 0h4.84l.83 4.15 3.52-2.35 3.43 3.43-2.35 3.52zM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" transform="scale(0.66)"/></svg>
-                <span class="activity-active-bar" aria-hidden="true"></span>
-            </button>
-        </aside>
-
-        <aside class="explorer">
-            <div class="explorer-title">
-                <span>Explorer</span>
-                <span class="explorer-actions" aria-hidden="true">
-                    <span class="explorer-dots" title="Views and More Actions">...</span>
-                </span>
+        <header class="pa-topbar" role="banner">
+            <div class="pa-topbar-left">
+                <button class="pa-waffle" type="button" aria-label="App launcher">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </button>
+                <span class="pa-app-title">Power Automate</span>
             </div>
-            <div class="explorer-section open-editors">
-                <div class="explorer-section-title">
-                    <span class="chevron">▾</span>
-                    <span>Open Editors</span>
-                </div>
-                <div class="explorer-section-body">
-                    <div class="open-editor-item active">
-                        <span class="oe-close" aria-hidden="true">×</span>
-                        <span class="file-icon icon-js" aria-hidden="true">JS</span>
-                        <span>portfolio.js</span>
-                    </div>
-                    <div class="open-editor-item dirty" id="openEditorActive">
-                        <span class="oe-close" aria-hidden="true">●</span>
-                        <span class="file-icon icon-md" aria-hidden="true">MD</span>
-                        <span id="openEditorActiveLabel">01_working_on.md</span>
-                    </div>
-                </div>
+            <div class="pa-topbar-search" id="globalSearch">
+                <span class="pa-search-icon" aria-hidden="true">⌕</span>
+                <input type="search" id="globalSearchInput" placeholder="Search portfolio &amp; blogs"
+                    aria-label="Search portfolio and blogs" autocomplete="off"
+                    role="combobox" aria-controls="globalSearchResults" aria-expanded="false">
+                <div class="pa-search-results" id="globalSearchResults" role="listbox" hidden></div>
             </div>
-            <div class="explorer-section">
-                <div class="explorer-section-title">
-                    <span class="chevron">▾</span>
-                    <span>WyattDave</span>
-                    <span class="section-actions" aria-hidden="true">
-                        <span title="New File">⊕</span>
-                        <span title="New Folder">▢</span>
-                        <span title="Refresh">↻</span>
-                        <span title="Collapse All">⇲</span>
+            <div class="pa-topbar-right">
+                <div class="pa-env" title="Environment">
+                    <span class="pa-env-icon" aria-hidden="true">⌬</span>
+                    <span class="pa-env-text">
+                        <span>Environments</span>
+                        <strong>WyattDave (default)</strong>
                     </span>
                 </div>
-                <div class="repo-root">
-                    <span class="chevron">▾</span>
-                    <span class="folder-icon" aria-hidden="true">📁</span>
-                    <span>wyattdave</span>
-                </div>
-
-                <nav class="nav-tree" aria-label="Portfolio sections" id="navTree"></nav>
+                <button class="pa-icon-btn" id="coffeeButton" type="button" title="Coffee" aria-label="Coffee">☺</button>
+                <button class="pa-icon-btn" id="settingsLauncher" type="button" title="Settings" aria-label="Settings">⚙</button>
+                <button class="pa-icon-btn" id="helpButton" type="button" title="Help" aria-label="Help">?</button>
+                <button class="pa-avatar" type="button" title="Account" aria-label="Account">DW</button>
             </div>
+        </header>
 
-            <div class="explorer-section">
-                <div class="explorer-section-title">
-                    <span class="chevron">▾</span>
-                    <span>Outline</span>
-                </div>
-                <div class="outline-list">
-                    <div class="outline-item"><span class="outline-icon">{ }</span><span>portfolio</span></div>
-                    <div class="outline-item indent-1"><span class="outline-icon">{ }</span><span>sections[]</span></div>
-                    <div class="outline-item indent-2"><span class="outline-icon">ƒ</span><span>render()</span></div>
-                    <div class="outline-item indent-2"><span class="outline-icon">ƒ</span><span>setActive()</span></div>
-                </div>
-            </div>
-
-            <div class="explorer-section">
-                <div class="explorer-section-title">
-                    <span class="chevron">▸</span>
-                    <span>Timeline</span>
-                </div>
-            </div>
-
-            <div class="panel-title">About</div>
-            <div class="profile-dock">
-                <div id="pills" style="padding-left: 20px; display: block;">
-                <strong>David Wyatt / Wyatt Dave</strong>
-
-                <img src="https://img.shields.io/badge/Power%20Automate-:badgeContent?logo=powerautomate&color=0066FF"
-                    alt="power automate Badge" />
-                <img src="https://img.shields.io/badge/Power%20Apps-:badgeContent?logo=powerapps&color=742774"
-                    alt="power apps Badge" />
-                <img src="https://img.shields.io/badge/Power%20FX-:badgeContent?logo=powerfx&color=7F2157"
-                    alt="power fx Badge" />
-                <img src="https://img.shields.io/badge/Dataverse-:badgeContent?logo=dataverse&color=088142"
-                    alt="dataverse badge" />
-                <img src="https://img.shields.io/badge/Copilot%20Studio-:badgeContent?logo=copilot&color=0B556A"
-                    alt="power virtual agent bdge" />
-                <img src="https://img.shields.io/badge/Power%20BI-:badgeContent?logo=powerbi&color=F2C811&logoColor=ffffff"
-                    alt="power bi Badge" />
-                <img src="https://img.shields.io/badge/Office Script-:badgeContent?logo=excel&color=217346"
-                    alt="ofice script badge" />
-                <img src="https://img.shields.io/badge/VBA-:badgeContent?logo=visualbasic&color=512BD4"
-                    alt="vb badge" />
-                <img src="https://img.shields.io/badge/JavaScript-:badgeContent?logo=javascript&color=F7DF1E&logoColor=000000"" alt="
-                    javascript badge" />
-                <img src="https://img.shields.io/badge/HTML-:badgeContent?logo=html5&color=E34F26&logoColor=ffffff"" alt="
-                    html badge" />
-                <img src="https://img.shields.io/badge/CSS-:badgeContent?logo=css3&color=1572B6&logoColor=ffffff"" alt="
-                    css badge" />
-                    </div>
-            </div>
+        <aside class="pa-rail" id="paRail" aria-label="Primary navigation">
+            <button class="pa-rail-toggle" type="button" aria-label="Toggle menu" id="paRailToggle">≡</button>
+            <nav class="pa-rail-nav nav-tree" id="navTree" aria-label="Portfolio sections"></nav>
+            <div class="pa-rail-spacer"></div>
+            <button class="pa-rail-item pa-rail-more" type="button" id="moreButton" aria-haspopup="dialog"
+                aria-expanded="false">
+                <span class="pa-rail-icon" aria-hidden="true">⋯</span><span class="pa-rail-label">More</span>
+            </button>
+            <button class="pa-chatbot-launcher" id="chatbotLauncher" type="button" aria-controls="chatbotPanel"
+                aria-expanded="false">
+                <span class="pa-chatbot-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3a9 9 0 0 0-9 9c0 1.7.5 3.3 1.4 4.7L3 21l4.3-1.4A9 9 0 1 0 12 3zm-3 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm6 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>
+                </span>
+                <span class="pa-chatbot-label">Ask a chatbot</span>
+            </button>
         </aside>
 
-        <main class="editor">
-            <div class="tabs" role="tablist">
-                <div class="tab" role="tab">
-                    <span class="file-icon icon-js" aria-hidden="true">JS</span>
-                    <span>portfolio.js</span>
-                    <span class="tab-close" title="Close" aria-hidden="true">×</span>
-                </div>
-                <div class="tab active" id="activeTabLabel" role="tab" aria-selected="true">
-                    <span class="file-icon icon-md" aria-hidden="true">MD</span>
-                    <span id="activeTabLabelText">01_working_on.md</span>
-                    <span class="tab-close dirty" title="Unsaved" aria-hidden="true">●</span>
-                </div>
-                <div class="tabs-actions" aria-hidden="true">
-                    <span title="Split Editor">⊟</span>
-                    <span title="More Actions">⋯</span>
-                </div>
+        <div class="pa-more-popup" id="morePopup" role="dialog" aria-labelledby="morePopupTitle" hidden>
+            <div class="pa-more-popup-header">
+                <h2 id="morePopupTitle">More</h2>
+                <button class="pa-more-popup-close" id="morePopupClose" type="button" aria-label="Close">✕</button>
             </div>
-            <nav class="breadcrumbs" aria-label="Breadcrumbs">
-                <span class="crumb"><span class="folder-icon" aria-hidden="true">📁</span>wyattdave</span>
-                <span class="crumb-sep">›</span>
-                <span class="crumb"><span class="file-icon icon-md" aria-hidden="true">MD</span><span id="breadcrumbCurrent">01_working_on.md</span></span>
-                <span class="crumb-sep">›</span>
-                <span class="crumb crumb-symbol">{ } portfolio</span>
-            </nav>
-            <div class="status-bar">
-                <span class="status-chip">branch: main</span>
-                <span class="status-chip">focus: tools + writing + experiments</span>
-                <span class="status-chip">theme: bsod hero / ide body</span>
-                <span class="status-chip">bonus: Sinclair Spectrum mini-game</span>
+            <p class="pa-more-popup-sub">About this maker — David Wyatt / Wyatt Dave</p>
+            <ul class="pa-more-popup-list" id="morePopupList"></ul>
+        </div>
+
+        <div class="pa-sidebar-hidden" hidden aria-hidden="true">
+            <div class="pa-flow-active" id="openEditorActive">
+                <span class="pa-flow-active-label" id="openEditorActiveLabel">01_working_on.md</span>
+            </div>
+            <div id="pills"></div>
+        </div>
+
+        <main class="pa-main" role="main">
+            <div class="pa-command-bar">
+                <button class="pa-cmd-btn" id="newFlowButton" type="button"><span aria-hidden="true">＋</span> New flow</button>
+                <button class="pa-cmd-btn" id="importButton" type="button"><span aria-hidden="true">↧</span> Import</button>
+                <span class="pa-cmd-sep" aria-hidden="true"></span>
+                <button class="pa-cmd-btn pa-cmd-quiet" id="shareButton" type="button"><span aria-hidden="true">⤴</span> Share</button>
+                <button class="pa-cmd-btn pa-cmd-quiet" type="button"><span aria-hidden="true">▶</span> Run</button>
+                <div class="pa-cmd-spacer"></div>
+            </div>
+
+            <div class="pa-page-header">
+                <nav class="pa-breadcrumbs" aria-label="Breadcrumbs">
+                    <a class="pa-crumb" href="#">My flows</a>
+                    <span class="pa-crumb-sep" aria-hidden="true">›</span>
+                    <a class="pa-crumb" href="#">WyattDave</a>
+                    <span class="pa-crumb-sep" aria-hidden="true">›</span>
+                    <span class="pa-crumb pa-crumb-current" id="breadcrumbCurrent">01_working_on.md</span>
+                </nav>
+                <h1 class="pa-page-title" id="activeTabLabel">
+                    <span class="pa-page-title-icon" aria-hidden="true">→</span>
+                    <span id="activeTabLabelText">01_working_on.md</span>
+                </h1>
+                
             </div>
 
             <div class="editor-scroll">
                 <div id="generatedSections"></div>
 
-                <section class="code-file" id="blogs" data-file="03_blogs.api.js">
+                <section class="code-file" id="blogs" data-file="All of My Blogs">
                     <div class="file-header">
                         <h2>Blogs</h2>
                         <div class="file-meta">
                             <span class="file-tag">Recent Blogs</span>
                             <a class="resource-link inline"
-                                href="https://dev.to/api/articles?username=wyattdave&per_page=10" target="_blank"
-                                rel="noreferrer">dev.to/articles</a>
+                                href="https://dev.to/wyattdave" target="_blank"
+                                rel="noopener noreferrer">dev.to/articles</a>
                         </div>
                     </div>
                     <div class="code-body">
-                        <div class="line-numbers">01<br>02<br>03<br>04<br>05<br>06<br>07<br>08<br>09<br>10</div>
                         <div class="section-content">
                             <div class="section-copy">
                                 <p>The writing archive is where the day-to-day experiments get turned into patterns:
@@ -260,7 +186,6 @@
                         </div>
                     </div>
                     <div class="code-body">
-                        <div class="line-numbers">10<br>20<br>30<br>40<br>50<br>60<br>70<br>80</div>
                         <div class="section-content">
                             <div class="spectrum-shell">
                                 <div class="spectrum-frame">
@@ -278,7 +203,8 @@
                                     </div>
                                 </div>
                                 <div class="game-panel section-copy">
-                                    <p>A small Space Invaders riff built in a Sinclair Spectrum palette, why because we all need a quick game, and we all know the Spectrum 64k was peak gaming.</p>
+                                    <p>A small Space Invaders riff built in a Sinclair Spectrum palette, why because we
+                                        all need a quick game, and we all know the Spectrum 64k was peak gaming.</p>
                                     <div class="controls">
                                         <div class="control-row">
                                             <span class="control-chip">Left / Right</span>
@@ -377,61 +303,388 @@
             </div>
         </main>
 
-        <footer class="vscode-statusbar" role="status" aria-label="Status Bar">
-            <div class="sb-left">
-                <span class="sb-item sb-remote" title="Open a Remote Window">
-                    <span class="sb-icon">&gt;&lt;</span>
-                </span>
-                <span class="sb-item" title="Source Control">
-                    <span class="sb-icon">⑂</span>
-                    <span>main</span>
-                    <span class="sb-icon sb-rotate">⟳</span>
-                    <span>0↓ 0↑</span>
-                </span>
-                <span class="sb-item" title="No Problems">
-                    <span class="sb-icon">⊘</span> 0
-                    <span class="sb-icon">⚠</span> 0
-                </span>
-                <span class="sb-item" title="Ports">
-                    <span class="sb-icon">⊕</span> Live Server : 5500
-                </span>
+        <aside class="pa-chatbot-panel" id="chatbotPanel" hidden aria-label="Help bot">
+            <header class="pa-chatbot-header">
+                <span>Chat with a help bot</span>
+                <button class="pa-chatbot-close" id="chatbotClose" type="button" aria-label="Close chatbot">✕</button>
+            </header>
+            <div class="pa-chatbot-agent">
+                <div class="pa-chatbot-avatar" aria-hidden="true">😎</div>
+                <div class="pa-chatbot-agent-name">Virtual Agent</div>
+                <div class="pa-chatbot-greeting">Hi!</div>
             </div>
-            <div class="sb-right">
-                <span class="sb-item" title="Backers">
-                    <a class="sb-link" href="#top">↑ top</a>
-                </span>
-                <span class="sb-item" title="GitHub">
-                    <a class="sb-link" href="https://github.com/wyattdave/" target="_blank" rel="noreferrer">github.com/wyattdave</a>
-                </span>
-                <span class="sb-item" title="Power DevBox">
-                    <a class="sb-link" href="https://powerdevbox.com" target="_blank" rel="noreferrer">powerdevbox.com</a>
-                </span>
-                <span class="sb-item">Ln <span id="sbLine">1</span>, Col <span id="sbCol">1</span></span>
-                <span class="sb-item">Spaces: 4</span>
-                <span class="sb-item">UTF-8</span>
-                <span class="sb-item">LF</span>
-                <span class="sb-item sb-lang">{ } JavaScript</span>
-                <span class="sb-item" title="Notifications">🔔</span>
+            <div class="pa-chatbot-messages" id="chatbotMessages">
+                <div class="pa-chatbot-msg pa-chatbot-msg-bot">Hello! I'm the WyattDave Portfolio Virtual Agent.</div>
+                <div class="pa-chatbot-msg pa-chatbot-msg-bot">
+                    I'm free so Im not the fastest, or best, but give me a chance. 
+                </div>
             </div>
-        </footer>
+            <form class="pa-chatbot-input" id="chatbotForm">
+                <input type="text" id="chatbotInput" placeholder="Type your message" aria-label="Type your message"
+                    autocomplete="off">
+                <button type="submit" class="pa-chatbot-send" aria-label="Send">
+                    <svg viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M1 1l14 7-14 7 3-7z"/></svg>
+                </button>
+            </form>
+        </aside>
     </div>
 
-    <footer>
-        <div class="footer-inner">
-            <p>Built as a static portfolio site from mockup 34 for the landing screen and mockup 21 for the editor-style
-                follow-up sections.</p>
-            <div class="resource-links">
-                <a class="resource-link" href="#top">Back to top</a>
-                <a class="resource-link" href="https://github.com/wyattdave/" target="_blank"
-                    rel="noreferrer">GitHub</a>
-                <a class="resource-link" href="https://powerdevbox.com" target="_blank" rel="noreferrer">Power
-                    DevBox</a>
-            </div>
-        </div>
-    </footer>
     <script src="portfilio.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Cloudflare Worker endpoint (override on the host page if needed)
+        window.CHATBOT_ENDPOINT = window.CHATBOT_ENDPOINT
+            || 'https://wyattdave-chatbot.powerdevbox.workers.dev/chat';
 
+        (function () {
+            const launcher = document.getElementById('chatbotLauncher');
+            const panel = document.getElementById('chatbotPanel');
+            const closeBtn = document.getElementById('chatbotClose');
+            const form = document.getElementById('chatbotForm');
+            const input = document.getElementById('chatbotInput');
+            const messages = document.getElementById('chatbotMessages');
+            const sendBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+            // Conversation history sent to the Worker (excludes UI-only intro bubbles).
+            const history = [];
+            let blogContextSent = false;
+            let portfolioContextSent = false;
+            let inFlight = false;
+
+            const openChat = () => {
+                panel.hidden = false;
+                launcher.setAttribute('aria-expanded', 'true');
+                requestAnimationFrame(() => panel.classList.add('is-open'));
+                setTimeout(() => input && input.focus(), 120);
+            };
+            const closeChat = () => {
+                panel.classList.remove('is-open');
+                launcher.setAttribute('aria-expanded', 'false');
+                setTimeout(() => { panel.hidden = true; }, 200);
+            };
+            const toggleChat = () => (panel.hidden ? openChat() : closeChat());
+
+            if (launcher) launcher.addEventListener('click', toggleChat);
+            if (closeBtn) closeBtn.addEventListener('click', closeChat);
+
+            const appendMessage = (text, who) => {
+                const node = document.createElement('div');
+                node.className = 'pa-chatbot-msg ' + (who === 'me' ? 'pa-chatbot-msg-me' : 'pa-chatbot-msg-bot');
+                if (who === 'bot') {
+                    node.innerHTML = renderMarkdown(text);
+                    enhanceLinks(node);
+                } else {
+                    node.textContent = text;
+                }
+                messages.appendChild(node);
+                messages.scrollTop = messages.scrollHeight;
+                return node;
+            };
+
+            const setBotMessage = (node, text) => {
+                node.innerHTML = renderMarkdown(text);
+                enhanceLinks(node);
+                messages.scrollTop = messages.scrollHeight;
+            };
+
+            const escapeHtml = (s) => String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+
+            const renderInline = (s) => {
+                let out = escapeHtml(s);
+                // code spans
+                out = out.replace(/`([^`]+)`/g, (_, c) => `<code>${c}</code>`);
+                // bold then italic
+                out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                out = out.replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+                // links [text](url)
+                out = out.replace(/\[([^\]]+)\]\((https?:[^\s)]+)\)/g,
+                    (_, t, u) => `<a href="${u}" target="_blank" rel="noopener noreferrer">${t}</a>`);
+                // bare URLs
+                out = out.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g,
+                    (_, pre, u) => `${pre}<a href="${u}" target="_blank" rel="noopener noreferrer">${u}</a>`);
+                return out;
+            };
+
+            const parseTableRow = (line) => line
+                .trim()
+                .replace(/^\|/, '')
+                .replace(/\|$/, '')
+                .split('|')
+                .map((cell) => cell.trim());
+
+            const isTableSeparator = (line) => /^\s*\|?(\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?\s*$/.test(line);
+
+            const renderTable = (headerLine, bodyLines) => {
+                const headers = parseTableRow(headerLine);
+                const rows = bodyLines
+                    .map(parseTableRow)
+                    .filter((cells) => cells.length && cells.some((cell) => cell.length));
+
+                if (!headers.length) {
+                    return '';
+                }
+
+                return '<div class="pa-chatbot-table-wrap"><table><thead><tr>'
+                    + headers.map((cell) => `<th>${renderInline(cell)}</th>`).join('')
+                    + '</tr></thead><tbody>'
+                    + rows.map((cells) => '<tr>' + headers.map((_, index) => `<td>${renderInline(cells[index] || '')}</td>`).join('') + '</tr>').join('')
+                    + '</tbody></table></div>';
+            };
+
+            const renderMarkdown = (raw) => {
+                if (raw == null) return '';
+                const text = String(raw).replace(/\r\n?/g, '\n');
+                const lines = text.split('\n');
+                const html = [];
+                let i = 0;
+                let para = [];
+                let list = null; // { type: 'ul'|'ol', items: [] }
+
+                const flushPara = () => {
+                    if (!para.length) return;
+                    html.push('<p>' + renderInline(para.join(' ')) + '</p>');
+                    para = [];
+                };
+                const flushList = () => {
+                    if (!list) return;
+                    const tag = list.type;
+                    html.push(`<${tag}>` + list.items.map((it) => `<li>${renderInline(it)}</li>`).join('') + `</${tag}>`);
+                    list = null;
+                };
+
+                while (i < lines.length) {
+                    const line = lines[i];
+
+                    // fenced code block
+                    const fence = line.match(/^```(\w*)\s*$/);
+                    if (fence) {
+                        flushPara(); flushList();
+                        const buf = [];
+                        i++;
+                        while (i < lines.length && !/^```\s*$/.test(lines[i])) {
+                            buf.push(lines[i]); i++;
+                        }
+                        i++; // skip closing fence
+                        html.push(`<pre><code>${escapeHtml(buf.join('\n'))}</code></pre>`);
+                        continue;
+                    }
+
+                    if (!line.trim()) {
+                        flushPara(); flushList();
+                        i++; continue;
+                    }
+
+                    const heading = line.match(/^(#{1,6})\s+(.+)$/);
+                    if (heading) {
+                        flushPara(); flushList();
+                        const lvl = heading[1].length;
+                        html.push(`<h${lvl}>${renderInline(heading[2])}</h${lvl}>`);
+                        i++; continue;
+                    }
+
+                    if (line.includes('|') && i + 1 < lines.length && isTableSeparator(lines[i + 1])) {
+                        flushPara(); flushList();
+                        const bodyRows = [];
+                        i += 2;
+                        while (i < lines.length && lines[i].trim() && lines[i].includes('|')) {
+                            bodyRows.push(lines[i]);
+                            i++;
+                        }
+                        html.push(renderTable(line, bodyRows));
+                        continue;
+                    }
+
+                    const ul = line.match(/^\s*[-*+]\s+(.+)$/);
+                    const ol = line.match(/^\s*\d+\.\s+(.+)$/);
+                    if (ul || ol) {
+                        flushPara();
+                        const type = ul ? 'ul' : 'ol';
+                        if (!list || list.type !== type) { flushList(); list = { type, items: [] }; }
+                        list.items.push((ul || ol)[1]);
+                        i++; continue;
+                    }
+
+                    flushList();
+                    para.push(line.trim());
+                    i++;
+                }
+                flushPara(); flushList();
+                return html.join('');
+            };
+
+            const enhanceLinks = (root) => {
+                root.querySelectorAll('a[href]').forEach((a) => {
+                    a.setAttribute('target', '_blank');
+                    a.setAttribute('rel', 'noopener noreferrer');
+                });
+            };
+
+            const setBusy = (busy) => {
+                inFlight = busy;
+                if (input) input.disabled = busy;
+                if (sendBtn) sendBtn.disabled = busy;
+            };
+
+            // Trim the local portfolio config to a compact context payload.
+            const buildPortfolioContext = () => {
+                const cfg = (typeof sectionConfig !== 'undefined' && Array.isArray(sectionConfig.sections))
+                    ? sectionConfig.sections
+                    : [];
+                return cfg.map((s) => ({
+                    id: s.id,
+                    title: s.title,
+                    file: s.file,
+                    meta: s.meta,
+                    markdown: s.markdown
+                }));
+            };
+
+            const getSharedBlogContext = async () => {
+                const ready = window.wyattDaveBlogContextReady;
+                if (ready && typeof ready.then === 'function') {
+                    try {
+                        await ready;
+                    } catch (e) {
+                        // The page loader already falls back locally when the API fails.
+                    }
+                }
+
+                return Array.isArray(window.wyattDaveBlogContext)
+                    ? window.wyattDaveBlogContext
+                    : [];
+            };
+
+            const ensureContextMessages = async () => {
+                const extras = [];
+                if (!portfolioContextSent) {
+                    const portfolio = buildPortfolioContext();
+                    extras.push({
+                        role: 'system',
+                        content: 'Portfolio sections (from portfilio.js) as JSON:\n```json\n'
+                            + JSON.stringify(portfolio, null, 2) + '\n```'
+                    });
+                    portfolioContextSent = true;
+                }
+                if (!blogContextSent) {
+                    const blogs = await getSharedBlogContext();
+                    if (blogs.length) {
+                        extras.push({
+                            role: 'system',
+                            content: 'All dev.to articles for wyattdave loaded by the site at startup (use the id with the get_devto_article tool when more depth is needed):\n```json\n'
+                                + JSON.stringify(blogs, null, 2) + '\n```'
+                        });
+                    }
+                    blogContextSent = true;
+                }
+                // Prepend extras to history once, so they ride along with every turn.
+                if (extras.length) history.unshift(...extras);
+            };
+
+            const callChatbot = async (userText) => {
+                await ensureContextMessages();
+                history.push({ role: 'user', content: userText });
+
+                const res = await fetch(window.CHATBOT_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: history })
+                });
+
+                const text = await res.text();
+                let data = null;
+                try { data = JSON.parse(text); } catch (e) { /* non-JSON */ }
+
+                if (!res.ok) {
+                    throw new Error((data && data.error) || ('Request failed: ' + res.status));
+                }
+                const reply = (data && data.reply) || '';
+                if (reply) history.push({ role: 'assistant', content: reply });
+                return reply || 'No reply.';
+            };
+
+            if (form) {
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    if (inFlight) return;
+                    const value = (input.value || '').trim();
+                    if (!value) return;
+                    appendMessage(value, 'me');
+                    input.value = '';
+
+                    const placeholder = appendMessage('…', 'bot');
+                    setBusy(true);
+                    try {
+                        const reply = await callChatbot(value);
+                        setBotMessage(placeholder, reply);
+                    } catch (err) {
+                        placeholder.textContent = 'Sorry, the bot is unavailable right now. (' + err.message + ')';
+                    } finally {
+                        setBusy(false);
+                        if (input) input.focus();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !panel.hidden) closeChat();
+            });
+        })();
+
+        /* Rail toggle via hamburger button only — starts expanded, shrinks/grows the main column */
+        (function () {
+            const rail = document.getElementById('paRail');
+            const toggle = document.getElementById('paRailToggle');
+            if (!rail || !toggle) return;
+            toggle.addEventListener('click', () => rail.classList.toggle('is-collapsed'));
+        })();
+
+        /* More popup — pulls badge alts from #pills, lists icon + name (no colored shields) */
+        (function () {
+            const moreBtn = document.getElementById('moreButton');
+            const popup = document.getElementById('morePopup');
+            const closeBtn = document.getElementById('morePopupClose');
+            const list = document.getElementById('morePopupList');
+            if (!moreBtn || !popup || !list) return;
+
+            const skills = [
+                { name: 'Power Automate', icon: '→' },
+                { name: 'Power Apps', icon: '▦' },
+                { name: 'Power FX', icon: 'ƒ' },
+                { name: 'Dataverse', icon: '⛁' },
+                { name: 'Copilot Studio', icon: '✦' },
+                { name: 'Power BI', icon: '◴' },
+                { name: 'Office Script', icon: '𝐗' },
+                { name: 'VBA', icon: '⌗' },
+                { name: 'JavaScript', icon: '{ }' },
+                { name: 'HTML', icon: '<>' },
+                { name: 'CSS', icon: '#' }
+            ];
+            list.innerHTML = skills.map((s) => (
+                '<li><span class="pa-more-icon" aria-hidden="true">' + s.icon + '</span>' +
+                '<span class="pa-more-name">' + s.name + '</span></li>'
+            )).join('');
+
+            const open = () => { popup.hidden = false; moreBtn.setAttribute('aria-expanded', 'true'); };
+            const close = () => { popup.hidden = true; moreBtn.setAttribute('aria-expanded', 'false'); };
+            const toggle = () => (popup.hidden ? open() : close());
+
+            moreBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+            if (closeBtn) closeBtn.addEventListener('click', close);
+            document.addEventListener('click', (event) => {
+                if (popup.hidden) return;
+                if (popup.contains(event.target) || moreBtn.contains(event.target)) return;
+                close();
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !popup.hidden) close();
+            });
+        })();
+    </script>
 </body>
 
 </html>

@@ -11,6 +11,12 @@ const packagePreview = document.getElementById('packagePreview');
 const copyPackageJsonButton = document.getElementById('copyPackageJson');
 const packageGeneratorStatus = document.getElementById('packageGeneratorStatus');
 const launchButtons = Array.from(document.querySelectorAll('[data-open-section]'));
+const settingsLauncher = document.getElementById('settingsLauncher');
+const coffeeButton = document.getElementById('coffeeButton');
+const helpButton = document.getElementById('helpButton');
+const newFlowButton = document.getElementById('newFlowButton');
+const importButton = document.getElementById('importButton');
+const shareButton = document.getElementById('shareButton');
 const activeTabLabel = document.getElementById('activeTabLabelText') || document.getElementById('activeTabLabel').querySelector('span:last-child');
 const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
 const openEditorActiveLabel = document.getElementById('openEditorActiveLabel');
@@ -22,12 +28,14 @@ const setActiveLabels = (text) => {
 let navLinks = [];
 let sections = [];
 let configuredSections = [];
+let activeSectionId = '';
 const CRT_SHUTDOWN_MS = 520;
 const CRT_STARTUP_MS = 640;
-const UNLOCK_SEQUENCE_TIMEOUT_MS = 1400;
+const PACKAGE_UNLOCK_TOKEN = 'ppac';
 const PACKAGE_GENERATOR_ENTRY = {
     id: 'package-generator',
     icon: '⟡',
+    title: 'package.json',
     dataFile: 'package.json'
 };
 const DEFAULT_META_ROW = {
@@ -36,11 +44,45 @@ const DEFAULT_META_ROW = {
     href: ''
 };
 const MARKDOWN_BLANK_LINE_SENTINEL = '&nbsp;';
-const PACKAGE_UNLOCK_SEQUENCE = ['ArrowDown', 'ArrowRight'];
+let crtShutdownTimer = 0;
 let crtStartupTimer = 0;
 let packageGeneratorUnlocked = false;
-let unlockSequenceIndex = 0;
-let unlockSequenceTimer = 0;
+const SHARE_MESSAGE =
+`Check out these cool websites by David Wyatt:
+• Portfolio – https://wyattdave.github.io/wyattdave/
+• Power Devbox – https://powerdevbox.com/
+• CodeaApp JS – https://codeappjs.com
+• Power Platform Games – https://powerplatformgames.com`;
+const FALLBACK_SITE_URL = 'https://wyattdave.github.io/wyattdave/';
+
+const resolveRequestedProfileSectionId = (fallbackSectionId) => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedSectionId = (params.get('profile') || '').trim().toLowerCase();
+
+    if (!requestedSectionId) {
+        return fallbackSectionId;
+    }
+
+    return document.getElementById(requestedSectionId)
+        ? requestedSectionId
+        : fallbackSectionId;
+};
+
+const hasRequestedProfileSection = () => new URLSearchParams(window.location.search).has('profile');
+
+const getDefaultWorkspaceSectionId = () => configuredSections.find((section) => section.id === ABOUT_SECTION_ID)?.id
+    || configuredSections[0]?.id
+    || 'blogs';
+
+const getQuickLinkBaseUrl = () => {
+    if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        return `${window.location.origin}${window.location.pathname}`;
+    }
+
+    return FALLBACK_SITE_URL;
+};
+
+const buildQuickLinkUrl = (sectionId) => `${getQuickLinkBaseUrl()}?profile=${encodeURIComponent(sectionId)}`;
 
 const escapeHtml = (value = '') => String(value)
     .replace(/&/g, '&amp;')
@@ -179,9 +221,9 @@ const renderMetaItem = (item) => {
 };
 
 const renderNavLink = (section, active = false) => `
-    <a class="nav-link${active ? ' active' : ''}" href="#${escapeHtml(section.id)}" data-panel="${escapeHtml(section.id)}">
-        <span class="icon">${escapeHtml(section.icon)}</span>
-        <span>${escapeHtml(section.dataFile)}</span>
+    <a class="nav-link pa-rail-item${active ? ' active' : ''}" href="#${escapeHtml(section.id)}" data-panel="${escapeHtml(section.id)}" title="${escapeHtml(section.title || section.dataFile)}">
+        <span class="pa-rail-icon icon" aria-hidden="true">${escapeHtml(section.icon)}</span>
+        <span class="pa-rail-label">${escapeHtml(section.title || section.dataFile)}</span>
     </a>
 `;
 
@@ -191,8 +233,8 @@ const setPackageGeneratorStatus = (message) => {
 
 const getStaticEntries = () => {
     const entries = [
-        { id: 'blogs', icon: '⨝', dataFile: blogSection.dataset.file },
-        { id: 'spectrum', icon: '▣', dataFile: spectrumSection.dataset.file }
+        { id: 'blogs', icon: '⨝', title: 'Blogs', dataFile: blogSection.dataset.file },
+        { id: 'spectrum', icon: '▣', title: 'Spectrum Invaders', dataFile: spectrumSection.dataset.file }
     ];
 
     if (packageGeneratorUnlocked) {
@@ -212,9 +254,13 @@ const bindNavLinkHandlers = () => {
     });
 };
 
+const ABOUT_SECTION_ID = 'about';
+
 const renderNavigation = (activeSectionId) => {
     navTree.innerHTML = [
-        ...configuredSections.map((section) => renderNavLink(section, section.id === activeSectionId)),
+        ...configuredSections
+            .filter((section) => section.id !== ABOUT_SECTION_ID)
+            .map((section) => renderNavLink(section, section.id === activeSectionId)),
         ...getStaticEntries().map((section) => renderNavLink(section, section.id === activeSectionId))
     ].join('');
 
@@ -365,16 +411,45 @@ const copyPreviewToClipboard = async () => {
     return copied;
 };
 
-const resetUnlockSequence = () => {
-    window.clearTimeout(unlockSequenceTimer);
-    unlockSequenceIndex = 0;
+const copyTextToClipboard = async (value) => {
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(value);
+        return true;
+    }
+
+    const textArea = document.createElement('textarea');
+    textArea.value = value;
+    textArea.setAttribute('readonly', '');
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    textArea.style.pointerEvents = 'none';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    const copied = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    return copied;
 };
 
-const armUnlockSequenceReset = () => {
-    window.clearTimeout(unlockSequenceTimer);
-    unlockSequenceTimer = window.setTimeout(() => {
-        unlockSequenceIndex = 0;
-    }, UNLOCK_SEQUENCE_TIMEOUT_MS);
+const handleBreadcrumbQuickLinkCopy = async () => {
+    if (!breadcrumbCurrent || !activeSectionId) {
+        return;
+    }
+
+    const quickLinkUrl = buildQuickLinkUrl(activeSectionId);
+    const originalTitle = breadcrumbCurrent.title;
+
+    try {
+        const copied = await copyTextToClipboard(quickLinkUrl);
+        breadcrumbCurrent.title = copied ? 'Quick link copied' : 'Clipboard copy was blocked';
+    } catch (error) {
+        breadcrumbCurrent.title = `Clipboard copy failed: ${error.message}`;
+    }
+
+    window.setTimeout(() => {
+        breadcrumbCurrent.title = originalTitle;
+    }, 1400);
 };
 
 const isEditableTarget = (target) => {
@@ -416,21 +491,30 @@ const buildConfiguredSections = () => {
     blogSection.dataset.file = formatFileName(configuredSections.length + 1, 'blogs.api.js');
     spectrumSection.dataset.file = formatFileName(configuredSections.length + 2, 'spectrum_invaders.js');
 
-    renderNavigation(configuredSections[0]?.id || 'blogs');
-    sections = Array.from(document.querySelectorAll('.code-file'));
-    setActiveLabels(configuredSections[0]?.dataFile || blogSection.dataset.file);
+    const defaultSectionId = getDefaultWorkspaceSectionId();
+    const initialSectionId = resolveRequestedProfileSectionId(defaultSectionId);
 
-    const defaultSectionId = configuredSections[0]?.id || 'blogs';
+    renderNavigation(initialSectionId);
+    sections = Array.from(document.querySelectorAll('.code-file'));
+    setActiveSection(initialSectionId);
+
     launchButtons.forEach((button) => {
-        button.dataset.openSection = defaultSectionId;
+        button.dataset.openSection = initialSectionId;
     });
 
-    return defaultSectionId;
+    return initialSectionId;
 };
 
 const setActiveSection = (sectionId) => {
     if (sectionId === PACKAGE_GENERATOR_ENTRY.id) {
         ensurePackageGeneratorVisible();
+    }
+
+    activeSectionId = sectionId;
+
+    const activeSection = document.getElementById(sectionId);
+    if (activeSection?.dataset.file) {
+        setActiveLabels(activeSection.dataset.file);
     }
 
     sections.forEach((section) => {
@@ -440,9 +524,6 @@ const setActiveSection = (sectionId) => {
     navLinks.forEach((link) => {
         const active = link.dataset.panel === sectionId;
         link.classList.toggle('active', active);
-        if (active) {
-            setActiveLabels(document.getElementById(sectionId).dataset.file);
-        }
     });
 };
 
@@ -454,6 +535,13 @@ const resetWorkspaceTransitionState = () => {
         button.disabled = false;
         button.removeAttribute('aria-disabled');
     });
+};
+
+const showWorkspaceImmediately = (sectionId) => {
+    setActiveSection(sectionId);
+    resetWorkspaceTransitionState();
+    body.classList.remove('view-landing');
+    body.classList.add('view-workspace');
 };
 
 const transitionToWorkspace = (sectionId) => {
@@ -486,6 +574,26 @@ const transitionToWorkspace = (sectionId) => {
 };
 
 const defaultSectionId = buildConfiguredSections();
+if (hasRequestedProfileSection()) {
+    showWorkspaceImmediately(defaultSectionId);
+}
+
+if (breadcrumbCurrent) {
+    breadcrumbCurrent.title = 'Copy Quick link to clipboard';
+    breadcrumbCurrent.setAttribute('role', 'button');
+    breadcrumbCurrent.setAttribute('tabindex', '0');
+    breadcrumbCurrent.setAttribute('aria-label', 'Copy Quick link to clipboard');
+    breadcrumbCurrent.addEventListener('click', () => {
+        handleBreadcrumbQuickLinkCopy();
+    });
+    breadcrumbCurrent.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            handleBreadcrumbQuickLinkCopy();
+        }
+    });
+}
+
 renderMetaRows();
 syncPackagePreviewFromInputs('Generator ready. Any field change will rebuild the JSON block.');
 
@@ -547,6 +655,53 @@ launchButtons.forEach((button) => {
     });
 });
 
+if (newFlowButton) {
+    newFlowButton.addEventListener('click', () => {
+        window.open('https://make.powerautomate.com', '_blank', 'noopener,noreferrer');
+    });
+}
+
+if (importButton) {
+    importButton.addEventListener('click', () => {
+        window.open('https://powerdevbox.com/contact', '_blank', 'noopener,noreferrer');
+    });
+}
+
+if (coffeeButton) {
+    coffeeButton.addEventListener('click', () => {
+        window.open('https://buymeacoffee.com/wyattdave', '_blank', 'noopener,noreferrer');
+    });
+}
+
+if (helpButton) {
+    helpButton.addEventListener('click', () => {
+        window.open('https://community.powerplatform.com/forums/thread/?partialUrl=MPACommunity', '_blank', 'noopener,noreferrer');
+    });
+}
+
+if (shareButton) {
+    shareButton.addEventListener('click', () => {
+        window.location.href = `mailto:?subject=Cool Power Platform Sites&body=${encodeURIComponent(SHARE_MESSAGE)}`;
+    });
+}
+
+/* Account avatar opens the About Me section (it is no longer in the sidebar). */
+const accountAvatar = document.querySelector('.pa-avatar');
+if (accountAvatar) {
+    accountAvatar.addEventListener('click', () => {
+        transitionToWorkspace(ABOUT_SECTION_ID);
+    });
+}
+
+/* Auto-reboot the BSOD landing into the workspace after 5 seconds. */
+if (body.classList.contains('view-landing') && !hasRequestedProfileSection()) {
+    window.setTimeout(() => {
+        if (body.classList.contains('view-landing') && !body.classList.contains('is-crt-transitioning')) {
+            transitionToWorkspace(defaultSectionId);
+        }
+    }, 5000);
+}
+
 const fallbackArticles = [
     {
         title: 'Power Apps- Comparing Different Ways to Create Apps With AI',
@@ -593,11 +748,31 @@ const blogElements = {
     next: document.getElementById('blogNext')
 };
 
+const BLOG_FETCH_PAGE_SIZE = 30;
+
 const blogState = {
     page: 1,
     perPage: 10,
     loading: false,
-    usedFallback: false
+    usedFallback: false,
+    allArticles: []
+};
+
+const trimBlogContextArticle = (article) => ({
+    id: article.id,
+    title: article.title,
+    description: article.description,
+    url: article.url,
+    tag_list: article.tag_list,
+    published_at: article.published_at,
+    readable_publish_date: article.readable_publish_date,
+    reading_time_minutes: article.reading_time_minutes,
+    positive_reactions_count: article.positive_reactions_count
+});
+
+const syncSharedBlogContext = () => {
+    window.wyattDaveBlogContext = blogState.allArticles.map(trimBlogContextArticle);
+    return window.wyattDaveBlogContext;
 };
 
 const normalizeImage = (article) => article.cover_image || article.social_image || 'img/how%20to.png';
@@ -626,64 +801,110 @@ const renderBlogCards = (articles) => {
 
 const setBlogLoadingState = (loading) => {
     blogState.loading = loading;
-    blogElements.prev.disabled = loading || blogState.page === 1;
-    blogElements.next.disabled = loading;
+    if (loading) {
+        blogElements.prev.disabled = true;
+        blogElements.next.disabled = true;
+        return;
+    }
+
+    blogElements.prev.disabled = blogState.page === 1;
+    blogElements.next.disabled = false;
 };
 
-const syncBlogPager = (hasNextPage) => {
+const syncBlogPager = () => {
+    const totalPages = Math.max(1, Math.ceil(blogState.allArticles.length / blogState.perPage));
     blogElements.prev.disabled = blogState.loading || blogState.page === 1;
-    blogElements.next.disabled = blogState.loading || !hasNextPage;
+    blogElements.next.disabled = blogState.loading || blogState.page >= totalPages;
 };
 
 const updateBlogStatus = (message) => {
     blogElements.status.textContent = message;
 };
 
-const loadBlogPage = async (page) => {
-    if (blogState.loading || page < 1) {
+const renderBlogPage = (page) => {
+    if (!blogState.allArticles.length) {
+        blogState.page = 1;
+        renderBlogCards([]);
+        updateBlogStatus('No blog posts are available right now.');
+        setBlogLoadingState(false);
+        syncBlogPager();
         return;
     }
 
+    const totalPages = Math.max(1, Math.ceil(blogState.allArticles.length / blogState.perPage));
+    const safePage = Math.min(Math.max(page, 1), totalPages);
+    const start = (safePage - 1) * blogState.perPage;
+    const end = start + blogState.perPage;
+    const pageArticles = blogState.allArticles.slice(start, end);
+
+    blogState.page = safePage;
+    renderBlogCards(pageArticles);
+
+    const pageSuffix = blogState.usedFallback ? ' using a fallback snapshot' : ' from the live API';
+    updateBlogStatus(`Page ${safePage} of ${totalPages}${pageSuffix}`);
+    setBlogLoadingState(false);
+    syncBlogPager();
+};
+
+const loadAllBlogs = async () => {
+    if (blogState.loading) {
+        return blogState.allArticles;
+    }
+
     setBlogLoadingState(true);
-    updateBlogStatus(`Loading page ${page} from Dev.to...`);
+    updateBlogStatus('Loading all Dev.to articles...');
 
     let articles = [];
     let usedFallback = false;
 
     try {
-        const response = await fetch(`https://dev.to/api/articles?username=wyattdave&per_page=${blogState.perPage}&page=${page}`);
-        if (!response.ok) {
-            throw new Error(`Request failed with status ${response.status}`);
+        let page = 1;
+
+        while (true) {
+            const response = await fetch(`https://dev.to/api/articles?username=wyattdave&per_page=${BLOG_FETCH_PAGE_SIZE}&page=${page}`);
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+
+            const batch = await response.json();
+            if (!Array.isArray(batch)) {
+                throw new Error('Unexpected article payload');
+            }
+
+            if (!batch.length) {
+                break;
+            }
+
+            articles.push(...batch);
+
+            if (batch.length < BLOG_FETCH_PAGE_SIZE) {
+                break;
+            }
+
+            page += 1;
         }
-        articles = await response.json();
-        if (!Array.isArray(articles) || !articles.length) {
+
+        if (!articles.length) {
             throw new Error('No articles returned');
         }
     } catch (error) {
-        if (page === 1) {
-            articles = fallbackArticles;
-            usedFallback = true;
-        } else {
-            updateBlogStatus(`Could not load page ${page}. ${error.message}`);
-            setBlogLoadingState(false);
-            syncBlogPager(true);
-            return;
-        }
+        articles = fallbackArticles;
+        usedFallback = true;
     }
 
-    blogState.page = page;
+    blogState.allArticles = articles;
     blogState.usedFallback = usedFallback;
-    renderBlogCards(articles);
+    syncSharedBlogContext();
+    renderBlogPage(1);
 
-    const pageSuffix = usedFallback ? ' using a fallback snapshot' : ' from the live API';
-    updateBlogStatus(`Page ${page}${pageSuffix}`);
-    setBlogLoadingState(false);
-    syncBlogPager(articles.length === blogState.perPage && !usedFallback);
+    return blogState.allArticles;
 };
 
-blogElements.prev.addEventListener('click', () => loadBlogPage(blogState.page - 1));
-blogElements.next.addEventListener('click', () => loadBlogPage(blogState.page + 1));
-loadBlogPage(1);
+window.wyattDaveBlogContext = [];
+window.wyattDaveBlogContextReady = loadAllBlogs();
+
+blogElements.prev.addEventListener('click', () => renderBlogPage(blogState.page - 1));
+blogElements.next.addEventListener('click', () => renderBlogPage(blogState.page + 1));
 
 const canvas = document.getElementById('spectrumGame');
 const gameStatus = document.getElementById('gameStatus');
@@ -1073,29 +1294,6 @@ const gameLoop = () => {
 window.addEventListener('keydown', (event) => {
     const editableTarget = isEditableTarget(event.target);
 
-    if (event.ctrlKey && !packageGeneratorUnlocked && event.key !== 'Control') {
-        const expectedKey = PACKAGE_UNLOCK_SEQUENCE[unlockSequenceIndex];
-
-        if (event.key === expectedKey) {
-            event.preventDefault();
-            unlockSequenceIndex += 1;
-
-            if (unlockSequenceIndex === PACKAGE_UNLOCK_SEQUENCE.length) {
-                resetUnlockSequence();
-                revealPackageGenerator();
-            } else {
-                armUnlockSequenceReset();
-            }
-        } else {
-            resetUnlockSequence();
-            if (event.key === PACKAGE_UNLOCK_SEQUENCE[0]) {
-                event.preventDefault();
-                unlockSequenceIndex = 1;
-                armUnlockSequenceReset();
-            }
-        }
-    }
-
     if (!editableTarget && (event.key === ' ' || event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
         event.preventDefault();
     }
@@ -1106,11 +1304,236 @@ window.addEventListener('keydown', (event) => {
 });
 
 window.addEventListener('keyup', (event) => {
-    if (event.key === 'Control') {
-        resetUnlockSequence();
-    }
     keys.delete(event.key);
 });
 
 resetGame();
 gameLoop();
+
+// --- Global search across portfolio sections + dev.to articles ---
+const searchInput = document.getElementById('globalSearchInput');
+const searchResultsEl = document.getElementById('globalSearchResults');
+
+const tryUnlockPackageGenerator = () => {
+    if (!settingsLauncher || !searchInput) {
+        return false;
+    }
+
+    if (searchInput.value.trim().toLowerCase() !== PACKAGE_UNLOCK_TOKEN) {
+        return false;
+    }
+
+    revealPackageGenerator();
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    return true;
+};
+
+if (settingsLauncher) {
+    settingsLauncher.addEventListener('click', () => {
+        tryUnlockPackageGenerator();
+    });
+}
+
+if (searchInput && searchResultsEl) {
+    const stripMarkdown = (md = '') => String(md)
+        .replace(/!\[[^\]]*\]\([^)]+\)/g, ' ')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/[#*_>`-]/g, ' ')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    const buildPortfolioIndex = () => {
+        const entries = configuredSections.map((section) => ({
+            kind: 'portfolio',
+            id: section.id,
+            title: section.title,
+            file: section.dataFile,
+            snippet: stripMarkdown(section.markdown).slice(0, 160),
+            haystack: [
+                section.id,
+                section.title,
+                (section.meta || []).map((m) => `${m.label} ${m.href || ''}`).join(' '),
+                stripMarkdown(section.markdown)
+            ].join(' ').toLowerCase()
+        }));
+        entries.push({
+            kind: 'portfolio',
+            id: 'blogs',
+            title: 'Blogs',
+            file: blogSection.dataset.file,
+            snippet: 'Recent dev.to writing archive.',
+            haystack: 'blogs writing dev.to archive articles'
+        });
+        entries.push({
+            kind: 'portfolio',
+            id: 'spectrum',
+            title: 'Spectrum Invaders',
+            file: spectrumSection.dataset.file,
+            snippet: 'Sinclair Spectrum-inspired mini-game.',
+            haystack: 'spectrum invaders sinclair game canvas mini-game'
+        });
+        return entries;
+    };
+
+    let portfolioIndex = buildPortfolioIndex();
+    let blogIndex = null;
+    let blogIndexPromise = null;
+
+    const loadBlogIndex = () => {
+        if (blogIndex) return Promise.resolve(blogIndex);
+        if (blogIndexPromise) return blogIndexPromise;
+        blogIndexPromise = fetch('https://dev.to/api/articles?username=wyattdave&per_page=1000')
+            .then((r) => r.ok ? r.json() : Promise.reject(new Error('dev.to request failed')))
+            .then((articles) => {
+                const list = Array.isArray(articles) && articles.length ? articles : fallbackArticles;
+                blogIndex = list.map((a) => ({
+                    kind: 'blog',
+                    title: a.title,
+                    url: a.url,
+                    date: a.readable_publish_date || '',
+                    snippet: a.description || '',
+                    haystack: [
+                        a.title,
+                        a.description || '',
+                        (a.tag_list || []).join(' ')
+                    ].join(' ').toLowerCase()
+                }));
+                return blogIndex;
+            })
+            .catch(() => {
+                blogIndex = fallbackArticles.map((a) => ({
+                    kind: 'blog',
+                    title: a.title,
+                    url: a.url,
+                    date: a.readable_publish_date || '',
+                    snippet: a.description || '',
+                    haystack: [a.title, a.description || '', (a.tag_list || []).join(' ')].join(' ').toLowerCase()
+                }));
+                return blogIndex;
+            });
+        return blogIndexPromise;
+    };
+
+    const closeResults = () => {
+        searchResultsEl.hidden = true;
+        searchResultsEl.innerHTML = '';
+        searchInput.setAttribute('aria-expanded', 'false');
+    };
+
+    const renderResults = (query, portfolioMatches, blogMatches, { loadingBlogs = false } = {}) => {
+        if (!query) {
+            closeResults();
+            return;
+        }
+
+        const parts = [];
+        if (portfolioMatches.length) {
+            parts.push('<div class="pa-search-group-label">Portfolio</div>');
+            portfolioMatches.slice(0, 8).forEach((item) => {
+                parts.push(`
+                    <button type="button" class="pa-search-item" role="option"
+                        data-kind="portfolio" data-section="${escapeHtml(item.id)}">
+                        <span class="pa-search-item-title">${escapeHtml(item.title)}</span>
+                        <span class="pa-search-item-meta"><span>${escapeHtml(item.file)}</span></span>
+                        ${item.snippet ? `<span class="pa-search-item-snippet">${escapeHtml(item.snippet)}</span>` : ''}
+                    </button>
+                `);
+            });
+        }
+
+        if (blogMatches.length) {
+            parts.push('<div class="pa-search-group-label">Blogs (dev.to)</div>');
+            blogMatches.slice(0, 12).forEach((item) => {
+                parts.push(`
+                    <button type="button" class="pa-search-item" role="option"
+                        data-kind="blog" data-url="${escapeHtml(item.url)}">
+                        <span class="pa-search-item-title">${escapeHtml(item.title)}</span>
+                        <span class="pa-search-item-meta"><span>${escapeHtml(item.date)}</span><span>Opens in new tab</span></span>
+                        ${item.snippet ? `<span class="pa-search-item-snippet">${escapeHtml(item.snippet)}</span>` : ''}
+                    </button>
+                `);
+            });
+        }
+
+        if (loadingBlogs && !blogMatches.length) {
+            parts.push('<div class="pa-search-loading">Loading blog index…</div>');
+        }
+
+        if (!parts.length) {
+            parts.push('<div class="pa-search-empty">No matches found.</div>');
+        }
+
+        searchResultsEl.innerHTML = parts.join('');
+        searchResultsEl.hidden = false;
+        searchInput.setAttribute('aria-expanded', 'true');
+    };
+
+    const runSearch = (rawQuery) => {
+        const query = rawQuery.trim().toLowerCase();
+        if (!query) {
+            closeResults();
+            return;
+        }
+
+        // Refresh portfolio index in case file labels changed
+        portfolioIndex = buildPortfolioIndex();
+        const tokens = query.split(/\s+/).filter(Boolean);
+        const matches = (haystack) => tokens.every((t) => haystack.includes(t));
+
+        const portfolioMatches = portfolioIndex.filter((item) => matches(item.haystack));
+        const blogMatches = blogIndex ? blogIndex.filter((item) => matches(item.haystack)) : [];
+
+        renderResults(query, portfolioMatches, blogMatches, { loadingBlogs: !blogIndex });
+
+        if (!blogIndex) {
+            loadBlogIndex().then(() => {
+                if (searchInput.value.trim().toLowerCase() === query) {
+                    const updated = blogIndex.filter((item) => matches(item.haystack));
+                    renderResults(query, portfolioMatches, updated);
+                }
+            });
+        }
+    };
+
+    searchInput.addEventListener('input', (event) => {
+        runSearch(event.target.value);
+    });
+
+    searchInput.addEventListener('focus', () => {
+        if (searchInput.value.trim()) {
+            runSearch(searchInput.value);
+        }
+        loadBlogIndex();
+    });
+
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeResults();
+            searchInput.blur();
+        }
+    });
+
+    searchResultsEl.addEventListener('mousedown', (event) => {
+        // mousedown so we act before the input loses focus
+        const item = event.target.closest('.pa-search-item');
+        if (!item) return;
+        event.preventDefault();
+        if (item.dataset.kind === 'portfolio') {
+            transitionToWorkspace(item.dataset.section);
+        } else if (item.dataset.kind === 'blog') {
+            window.open(item.dataset.url, '_blank', 'noopener,noreferrer');
+        }
+        searchInput.value = '';
+        closeResults();
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('#globalSearch')) {
+            closeResults();
+        }
+    });
+}
+
+

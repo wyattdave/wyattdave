@@ -3,7 +3,7 @@ const sectionConfig = {
         {
             "id": "about",
             "icon": "😎",
-            "file": "about_me.profile.js",
+            "file": "Davids Profile",
             "title": "About Me",
             "meta": [
                 {
@@ -32,7 +32,7 @@ const sectionConfig = {
         {
             "id": "codeapps",
             "icon": "⌘",
-            "file": "codeapps.library.js",
+            "file": "Code Apps JS Library",
             "title": "Code Apps",
             "meta": [
                 {
@@ -50,7 +50,7 @@ const sectionConfig = {
         {
             "id": "autoreview",
             "icon": "{}",
-            "file": "autoreview.js",
+            "file": "AutoReview Power Automate flow checker",
             "title": "AutoReview",
             "meta": [
                 {
@@ -76,7 +76,7 @@ const sectionConfig = {
         {
             "id": "web-apps",
             "icon": "{}",
-            "file": "index.html",
+            "file": "Power Platform Developer Web Apps",
             "title": "Web Apps",
             "meta": [
                 {
@@ -89,7 +89,7 @@ const sectionConfig = {
         {
             "id": "vscode-ext",
             "icon": "{}",
-            "file": "index.js",
+            "file": "Dev Tools for Power Platform Developers",
             "title": "VS Code Extensions",
             "meta": [
                 {
@@ -102,7 +102,7 @@ const sectionConfig = {
         {
             "id": "bookmarklets",
             "icon": "Ξ",
-            "file": "bookmarklets.tools.js",
+            "file": "Quick Tools for Power Platform Developers",
             "title": "Bookmarklets Quick Tools",
             "meta": [
                 {
@@ -125,7 +125,7 @@ const sectionConfig = {
         {
             "id": "blog-series",
             "icon": "⊟",
-            "file": "blog.series.env",
+            "file": "Power Platform Blog Series",
             "title": "Blog Series",
             "meta": [
                 {

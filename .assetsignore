@@ -1,0 +1,11 @@
+# Files Cloudflare's static-assets uploader for the site (root wrangler.jsonc)
+# should NEVER ship to the edge.
+.git/
+.github/
+.vscode/
+.wrangler/
+node_modules/
+agent/
+worker/
+*.md
+ReadMe.md
