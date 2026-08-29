@@ -1,6 +1,6 @@
 # Hi, I'm David Wyatt
 
-> Also known as **Wyatt Dave**. Microsoft MVP, Power Platform developer, builder of practical low-code engineering tools, and writer of far too many notes that became blog posts.
+> Also known as **Wyatt Dave**. 3x Microsoft MVP, Power Platform developer, builder of practical low-code engineering tools, and writer of far too many notes that became blog posts.
 
 [![Portfolio](https://img.shields.io/badge/portfolio-powerdevbox.com-0078D4?style=for-the-badge&logo=microsoftpowerautomate&logoColor=white)](https://powerdevbox.com)
 [![GitHub](https://img.shields.io/badge/github-wyattdave-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/wyattdave)
@@ -33,6 +33,14 @@ const wyattDave = {
 - **AI-assisted development:** using LLMs and agent-style workflows to speed up delivery, reviews, documentation, and platform exploration.
 - **Technical writing:** Power Platform development, administration, architecture, governance, Dataverse, AI Builder, and pro-code patterns for low-code makers.
 
+
+## Security
+I have identified two Security vulnerabilities in the Power Platform and had them accepted at https://msrc.microsoft.com/
+
+-[https://dev.to/wyattdave/hacking-access-to-power-automate-4346](Power Automate Environment Access Bypass)
+-[https://dev.to/wyattdave/the-super-villain-power-app-405h](Connection Access Exploit)
+
+
 ## Featured Projects
 
 | Project | What it does |
@@ -61,6 +69,8 @@ const wyattDave = {
 
 - [Power Automate Utility VS Code](https://powerdevbox.com/utilityvs) - Edit and review Power Automate flows as code.
 - [AutoReview VS Code](https://powerdevbox.com/autoreview#vs-Extension) - Run Power Automate reviews inside VS Code.
+- [CAP](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.codeappjsplus) - Simplified UI for JavaScript-focused Power Apps Code Apps
+- [CoAgent](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.coagent) - GitHUb Copilot powered VS Code version of CoWork
 - [Code App JS Plus](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.codeappjsplus) - AI-assisted tooling for JavaScript-focused Power Apps Code Apps.
 
 ## Writing
@@ -75,6 +85,11 @@ Popular series include:
 - [Dataverse](https://dev.to/wyattdave/series/29137)
 - [Let's Talk About Platform](https://dev.to/wyattdave/series/27573)
 - [Developing with AI](https://dev.to/wyattdave/series/36525)
+- [How to](https://dev.to/wyattdave/series/22764)
+- [Beneath the Platform](https://dev.to/wyattdave/series/20311)
+- [Hacked](https://dev.to/wyattdave/series/23156)
+- [Automating the Platform](https://dev.to/wyattdave/series/23350)
+- [Lets Talk About the Power Platform](https://dev.to/wyattdave/series/27573)
 
 You can also read my longer story here: [From Shadow IT to Power Platform Developer](https://dev.to/wyattdave/from-shadow-it-to-power-platform-developer-the-low-code-diary-3h96).
 
