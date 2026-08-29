@@ -37,8 +37,8 @@ const wyattDave = {
 ## Security
 I have identified two Security vulnerabilities in the Power Platform and had them accepted at https://msrc.microsoft.com/
 
--[https://dev.to/wyattdave/hacking-access-to-power-automate-4346](Power Automate Environment Access Bypass)
--[https://dev.to/wyattdave/the-super-villain-power-app-405h](Connection Access Exploit)
+- [https://dev.to/wyattdave/hacking-access-to-power-automate-4346](Power Automate Environment Access Bypass)
+- [https://dev.to/wyattdave/the-super-villain-power-app-405h](Connection Access Exploit)
 
 
 ## Featured Projects
@@ -64,13 +64,15 @@ I have identified two Security vulnerabilities in the Power Platform and had the
 - [Shortcut](https://powerdevbox.com/shortcut) - Searchable Power Platform environment navigation.
 - [Share](https://powerdevbox.com/share) - Quick sharing and ownership workflows for solution components.
 - [Exception](https://powerdevbox.com/exception) - Power Automate exception-handling expression helper.
+- [Dataverse ERD](https://powerdevbox.com/erd) - Creates Entity-Relationship Diagram for Dataverse tables in a solution
+- [PDAC](https://powerdevbox.com/pdac) - Power DevBox Admin Center, custom function based version of the Power Platform Admin Cenrter
 
 ### VS Code Extensions
 
 - [Power Automate Utility VS Code](https://powerdevbox.com/utilityvs) - Edit and review Power Automate flows as code.
 - [AutoReview VS Code](https://powerdevbox.com/autoreview#vs-Extension) - Run Power Automate reviews inside VS Code.
 - [CAP](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.codeappjsplus) - Simplified UI for JavaScript-focused Power Apps Code Apps
-- [CoAgent](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.coagent) - GitHUb Copilot powered VS Code version of CoWork
+- [CoAgent](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.coagent) - GitHub Copilot powered VS Code version of CoWork
 - [Code App JS Plus](https://marketplace.visualstudio.com/items?itemName=PowerDevBox.codeappjsplus) - AI-assisted tooling for JavaScript-focused Power Apps Code Apps.
 
 ## Writing
